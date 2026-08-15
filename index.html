@@ -27,6 +27,16 @@
     --dorado-opaco:#a9834a;
     --texto-oscuro:#3a2416;
     --sombra:rgba(0,0,0,.45);
+
+    /* Paleta de la portada (pantalla 1) — azul, blanco y dorado */
+    --p-cielo:#eef5fc;
+    --p-crema:#fbf7ef;
+    --p-azul-suave:#cfe2f5;
+    --p-azul:#9dc0e6;
+    --p-azul-medio:#6699cc;
+    --p-azul-oscuro:#3a628f;
+    --p-marino:#1f3d5c;
+    --p-dorado:#c9a24d;
   }
 
   *{ box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
@@ -91,57 +101,282 @@
   }
 
   /* ============================================================
-     PANTALLA 1 — CANDADO / CLAVE
+     PANTALLA 1 — PORTADA / CANDADO / CLAVE
+     Paleta azul, blanco y dorado con caja de regalo, sobre y
+     lazo decorativos hechos en CSS/SVG (sin imágenes externas).
      ============================================================ */
   #pantalla-clave{
+    display:block;
+    overflow-y:auto;
+    overflow-x:hidden;
+    -webkit-overflow-scrolling:touch;
     background:
-      radial-gradient(ellipse at 50% 20%, rgba(203,161,90,.10), transparent 55%),
-      radial-gradient(ellipse at 20% 85%, rgba(110,27,52,.35), transparent 60%),
-      linear-gradient(160deg, var(--negro-profundo) 0%, var(--vino-oscuro) 55%, var(--negro-profundo) 100%);
-    overflow:hidden;
+      radial-gradient(ellipse at 12% 8%, rgba(201,162,77,.16), transparent 45%),
+      radial-gradient(ellipse at 88% 12%, rgba(102,153,204,.28), transparent 50%),
+      radial-gradient(ellipse at 15% 92%, rgba(157,192,230,.35), transparent 55%),
+      radial-gradient(ellipse at 85% 95%, rgba(201,162,77,.14), transparent 50%),
+      linear-gradient(165deg, var(--p-cielo) 0%, var(--p-crema) 45%, var(--p-azul-suave) 100%);
   }
 
-  .cielo-estrellas{
+  .portada-marco{
+    position:fixed;
+    inset:10px;
+    border:1px solid rgba(201,162,77,.55);
+    border-radius:22px;
+    pointer-events:none;
+    z-index:3;
+  }
+
+  .portada-marco::before,
+  .portada-marco::after{
+    content:"";
+    position:absolute;
+    width:34px;
+    height:34px;
+    border:1px solid rgba(201,162,77,.9);
+  }
+
+  .portada-marco::before{
+    top:-1px; left:-1px;
+    border-right:none; border-bottom:none;
+    border-radius:22px 0 0 0;
+  }
+
+  .portada-marco::after{
+    bottom:-1px; right:-1px;
+    border-left:none; border-top:none;
+    border-radius:0 0 22px 0;
+  }
+
+  .portada-fondo{
     position:absolute;
     inset:0;
     overflow:hidden;
     pointer-events:none;
+    z-index:1;
   }
 
-  .estrella{
+  .corazon-flotante{
     position:absolute;
-    width:2px;
-    height:2px;
-    background:var(--dorado-claro);
-    border-radius:50%;
-    opacity:.25;
-    animation:parpadeo 4s ease-in-out infinite;
+    font-size:12px;
+    color:var(--p-azul-medio);
+    opacity:.35;
+    animation:derivar 7s ease-in-out infinite;
   }
 
-  @keyframes parpadeo{
-    0%,100%{ opacity:.15; transform:scale(1); }
-    50%{ opacity:.85; transform:scale(1.6); }
+  @keyframes derivar{
+    0%,100%{ transform:translateY(0) rotate(0deg); opacity:.2; }
+    50%{ transform:translateY(-16px) rotate(8deg); opacity:.55; }
   }
 
-  .constelacion-corazon{
-    position:absolute;
-    top:50%;
-    left:50%;
-    width:min(520px, 140vw);
-    transform:translate(-50%,-50%);
-    opacity:.14;
-    pointer-events:none;
-  }
-
-  .clave-caja{
+  .portada-scroll{
     position:relative;
     z-index:2;
-    width:min(90vw, 380px);
-    text-align:center;
-    padding:0 1rem;
+    min-height:100%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:2.4rem 1.1rem;
   }
 
-  .clave-caja.temblar{
+  .portada-contenido{
+    width:100%;
+    max-width:900px;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:1.6rem;
+  }
+
+  @media (min-width:760px){
+    .portada-contenido{
+      flex-direction:row;
+      justify-content:center;
+      align-items:center;
+      gap:3.4rem;
+    }
+  }
+
+  .portada-titulo{
+    font-size:clamp(1rem, 3.4vw, 1.25rem);
+    letter-spacing:.05em;
+    color:var(--p-marino);
+    font-style:italic;
+    text-align:center;
+    font-family:'Lora', serif;
+    opacity:.85;
+    margin:0 0 .4rem;
+  }
+
+  /* -------- Ilustración: sobre + caja de regalo + lazo + corazón -------- */
+  .regalo-ilustracion{
+    position:relative;
+    width:210px;
+    height:190px;
+    margin:0 auto;
+    flex-shrink:0;
+    filter:drop-shadow(0 18px 26px rgba(31,61,92,.22));
+  }
+
+  .regalo-sobre{
+    position:absolute;
+    left:50%;
+    bottom:6px;
+    width:172px;
+    height:112px;
+    transform:translateX(-50%) rotate(-7deg);
+    z-index:1;
+  }
+
+  .regalo-sobre-cuerpo{
+    position:absolute;
+    inset:0;
+    background:linear-gradient(155deg, #ffffff, var(--p-azul-suave));
+    border-radius:8px;
+    box-shadow:0 14px 26px rgba(31,61,92,.22);
+  }
+
+  .regalo-sobre-solapa{
+    position:absolute;
+    top:0; left:0;
+    width:100%; height:58%;
+    background:linear-gradient(160deg, var(--p-azul), var(--p-azul-medio));
+    clip-path:polygon(0 0, 100% 0, 50% 100%);
+  }
+
+  .regalo-caja{
+    position:absolute;
+    left:50%;
+    bottom:34px;
+    width:128px;
+    height:98px;
+    transform:translateX(-50%);
+    background:linear-gradient(160deg, #ffffff, #eef5fc);
+    border:1px solid rgba(102,153,204,.35);
+    border-radius:12px;
+    box-shadow:0 16px 28px rgba(31,61,92,.28);
+    z-index:2;
+    overflow:hidden;
+  }
+
+  .regalo-caja::before{
+    content:"";
+    position:absolute;
+    left:50%; top:0;
+    width:26px; height:100%;
+    transform:translateX(-50%);
+    background:linear-gradient(180deg, var(--p-azul-medio), var(--p-azul));
+    box-shadow:inset 0 0 0 1px rgba(255,255,255,.35);
+  }
+
+  .regalo-caja::after{
+    content:"";
+    position:absolute;
+    top:50%; left:0;
+    width:100%; height:26px;
+    transform:translateY(-50%);
+    background:linear-gradient(90deg, var(--p-azul-medio), var(--p-azul));
+    box-shadow:inset 0 0 0 1px rgba(255,255,255,.35);
+  }
+
+  .regalo-lazo{
+    position:absolute;
+    left:50%;
+    top:-24px;
+    width:100px;
+    height:46px;
+    transform:translateX(-50%);
+    z-index:3;
+  }
+
+  .regalo-lazo .asa{
+    position:absolute;
+    top:0;
+    width:52px;
+    height:38px;
+    background:linear-gradient(135deg, #dceafa, var(--p-azul-medio));
+    box-shadow:inset 0 0 0 1px rgba(255,255,255,.6);
+  }
+
+  .regalo-lazo .asa.izq{
+    left:0;
+    clip-path:polygon(0% 8%, 58% 0%, 100% 50%, 58% 100%, 0% 92%);
+    transform:rotate(-16deg);
+    transform-origin:100% 50%;
+  }
+
+  .regalo-lazo .asa.der{
+    right:0;
+    clip-path:polygon(100% 8%, 42% 0%, 0% 50%, 42% 100%, 100% 92%);
+    transform:rotate(16deg);
+    transform-origin:0% 50%;
+  }
+
+  .regalo-lazo .cola{
+    position:absolute;
+    top:26px;
+    width:16px;
+    height:30px;
+    background:linear-gradient(180deg, var(--p-azul-medio), var(--p-azul));
+  }
+
+  .regalo-lazo .cola.izq{
+    left:38px;
+    transform:rotate(-8deg);
+    clip-path:polygon(0 0, 100% 0, 100% 78%, 50% 100%, 0 78%);
+  }
+
+  .regalo-lazo .cola.der{
+    right:38px;
+    transform:rotate(8deg);
+    clip-path:polygon(0 0, 100% 0, 100% 78%, 50% 100%, 0 78%);
+  }
+
+  .regalo-lazo .nudo{
+    position:absolute;
+    left:50%; top:14px;
+    width:24px; height:24px;
+    transform:translateX(-50%) rotate(45deg);
+    background:linear-gradient(135deg, #e7f1fb, var(--p-azul-medio));
+    border-radius:6px;
+    box-shadow:0 3px 8px rgba(31,61,92,.3);
+  }
+
+  .regalo-corazon{
+    position:absolute;
+    left:50%;
+    top:78px;
+    width:46px;
+    height:46px;
+    transform:translateX(-50%);
+    z-index:4;
+    filter:drop-shadow(0 6px 10px rgba(31,61,92,.35));
+  }
+
+  .regalo-corazon path.relleno{
+    fill:var(--p-azul-medio);
+  }
+
+  .regalo-corazon path.contorno{
+    fill:none;
+    stroke:#ffffff;
+    stroke-width:2;
+  }
+
+  /* -------- Tarjeta de contraseña -------- */
+  .clave-tarjeta{
+    position:relative;
+    width:100%;
+    max-width:340px;
+    background:linear-gradient(165deg, #ffffff, #f6faff);
+    border:1px solid rgba(201,162,77,.45);
+    border-radius:22px;
+    padding:1.9rem 1.6rem 1.7rem;
+    text-align:center;
+    box-shadow:0 24px 50px rgba(31,61,92,.18);
+  }
+
+  .clave-tarjeta.temblar{
     animation:shake .55s ease;
   }
 
@@ -152,93 +387,121 @@
     40%,60%{ transform:translateX(8px); }
   }
 
-  .clave-titulo{
-    font-size:clamp(1.05rem, 3.6vw, 1.35rem);
-    letter-spacing:.06em;
-    color:var(--crema-suave);
-    font-style:italic;
-    margin:0 0 1.6rem;
-    font-family:'Lora', serif;
-    opacity:.92;
+  .clave-tarjeta-adorno{
+    font-size:1.1rem;
+    color:var(--p-dorado);
+    margin-bottom:.3rem;
+    letter-spacing:.3em;
   }
 
-  .candado-icono{
-    width:58px;
-    height:58px;
-    margin:0 auto 1.6rem;
-    filter:drop-shadow(0 4px 10px rgba(0,0,0,.5));
+  .clave-tarjeta-titulo{
+    font-family:'Playfair Display', serif;
+    font-weight:700;
+    font-size:1.15rem;
+    letter-spacing:.14em;
+    color:var(--p-marino);
+    margin:0 0 .5rem;
   }
 
-  .candado-icono path,
-  .candado-icono rect{
-    stroke:var(--dorado-claro);
+  .clave-tarjeta-sub{
+    font-size:.8rem;
+    letter-spacing:.03em;
+    color:var(--p-azul-oscuro);
+    margin:0 0 1.4rem;
+    line-height:1.5;
   }
 
-  form#form-clave{
+  .clave-fila{
     display:flex;
-    flex-direction:column;
     align-items:center;
-    gap:1.1rem;
+    justify-content:center;
+    gap:.55rem;
   }
 
-  #input-clave{
-    width:100%;
-    max-width:220px;
+  .clave-candado-badge{
+    flex-shrink:0;
+    width:34px;
+    height:34px;
+    border-radius:50%;
+    background:linear-gradient(150deg, var(--p-azul), var(--p-azul-medio));
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    box-shadow:0 4px 10px rgba(31,61,92,.3);
+  }
+
+  .clave-candado-badge svg{
+    width:16px;
+    height:16px;
+  }
+
+  .clave-candado-badge path,
+  .clave-candado-badge rect{
+    stroke:#ffffff;
+  }
+
+  .clave-digitos{
+    display:flex;
+    gap:.4rem;
+  }
+
+  .clave-digito{
+    width:2.1rem;
+    height:2.5rem;
     text-align:center;
-    background:rgba(255,255,255,.04);
-    border:1px solid rgba(203,161,90,.45);
-    border-radius:999px;
-    padding:.85rem 1.2rem;
-    font-size:1.4rem;
-    letter-spacing:.5em;
-    color:var(--dorado-claro);
+    font-size:1.1rem;
+    border:1px solid rgba(102,153,204,.5);
+    border-radius:9px;
+    background:#ffffff;
+    color:transparent;
+    caret-color:var(--p-azul-oscuro);
     outline:none;
-    transition:border-color .3s, box-shadow .3s;
-    font-family:'Lora', serif;
+    position:relative;
+    transition:border-color .25s ease, box-shadow .25s ease, transform .15s ease;
   }
 
-  #input-clave::placeholder{
-    letter-spacing:.06em;
-    font-size:.85rem;
-    color:rgba(247,236,217,.35);
+  .clave-digito:focus{
+    border-color:var(--p-azul-medio);
+    box-shadow:0 0 0 3px rgba(102,153,204,.2);
   }
 
-  #input-clave:focus{
-    border-color:var(--dorado);
-    box-shadow:0 0 0 4px rgba(203,161,90,.12);
+  .clave-digito.lleno{
+    border-color:var(--p-dorado);
+    background:linear-gradient(160deg, #ffffff, #fdf7ea);
   }
 
-  .btn-abrir{
-    background:linear-gradient(135deg, var(--dorado-claro), var(--dorado-opaco));
-    color:var(--negro-profundo);
-    border:none;
-    border-radius:999px;
-    padding:.75rem 2.4rem;
-    font-size:.95rem;
-    letter-spacing:.08em;
-    text-transform:uppercase;
-    font-weight:600;
-    cursor:pointer;
-    transition:transform .25s ease, box-shadow .25s ease;
-    box-shadow:0 8px 20px rgba(203,161,90,.25);
+  .clave-corazon-mini{
+    position:absolute;
+    inset:0;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:1.05rem;
+    color:var(--p-azul-medio);
+    opacity:0;
+    transition:opacity .15s ease, transform .15s ease;
+    transform:scale(.5);
+    pointer-events:none;
   }
 
-  .btn-abrir:hover{
-    transform:translateY(-2px);
-    box-shadow:0 12px 26px rgba(203,161,90,.35);
+  .clave-digito.lleno + .clave-corazon-mini,
+  .clave-digito-envoltura.lleno .clave-corazon-mini{
+    opacity:1;
+    transform:scale(1);
   }
 
-  .btn-abrir:active{
-    transform:translateY(0);
+  .clave-digito-envoltura{
+    position:relative;
   }
 
   .mensaje-error{
-    min-height:1.4em;
-    font-size:.92rem;
+    min-height:1.3em;
+    font-size:.86rem;
     font-style:italic;
-    color:var(--dorado-claro);
+    color:#b5556a;
     opacity:0;
     transition:opacity .4s ease;
+    margin:1.1rem 0 0;
   }
 
   .mensaje-error.visible{
@@ -579,8 +842,9 @@
   #pantalla-carta::-webkit-scrollbar-thumb{ background:rgba(203,161,90,.35); border-radius:8px; }
   #pantalla-carta::-webkit-scrollbar-track{ background:transparent; }
 
-  @media (max-width:380px){
-    .clave-caja{ padding:0 .5rem; }
+  @media (max-width:360px){
+    .clave-digito{ width:1.9rem; height:2.3rem; font-size:1rem; }
+    .clave-fila{ gap:.4rem; }
   }
 </style>
 </head>
@@ -589,53 +853,88 @@
 <div id="app">
 
   <!-- ======================================================
-       PANTALLA 1 — CANDADO / CLAVE
+       PANTALLA 1 — PORTADA / CANDADO / CLAVE
        ====================================================== -->
   <section id="pantalla-clave" class="pantalla activa">
-    <div class="cielo-estrellas" id="cielo-estrellas"></div>
 
-    <!-- Constelación decorativa discreta en forma de corazón -->
-    <svg class="constelacion-corazon" viewBox="0 0 300 260" aria-hidden="true">
-      <polyline points="150,230 60,150 30,100 45,55 85,40 120,60 150,95 180,60 215,40 255,55 270,100 240,150"
-        fill="none" stroke="#e6c98a" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/>
-      <g fill="#e6c98a">
-        <circle cx="150" cy="230" r="2.4"/>
-        <circle cx="60" cy="150" r="2"/>
-        <circle cx="30" cy="100" r="2"/>
-        <circle cx="45" cy="55" r="2"/>
-        <circle cx="85" cy="40" r="2"/>
-        <circle cx="120" cy="60" r="2"/>
-        <circle cx="150" cy="95" r="2.4"/>
-        <circle cx="180" cy="60" r="2"/>
-        <circle cx="215" cy="40" r="2"/>
-        <circle cx="255" cy="55" r="2"/>
-        <circle cx="270" cy="100" r="2"/>
-        <circle cx="240" cy="150" r="2"/>
-      </g>
-    </svg>
+    <!-- Marco decorativo dorado -->
+    <div class="portada-marco" aria-hidden="true"></div>
 
-    <div class="clave-caja" id="clave-caja">
-      <p class="clave-titulo">Este mensaje es solo para ti</p>
+    <!-- Corazones flotantes de fondo, generados por JS -->
+    <div class="portada-fondo" id="portada-fondo" aria-hidden="true"></div>
 
-      <svg class="candado-icono" viewBox="0 0 64 64" fill="none" aria-hidden="true">
-        <rect x="16" y="28" width="32" height="26" rx="4" stroke-width="2.5"/>
-        <path d="M22 28V20a10 10 0 0 1 20 0v8" stroke-width="2.5" stroke-linecap="round"/>
-        <circle cx="32" cy="39" r="3.4" fill="#e6c98a"/>
-        <line x1="32" y1="42" x2="32" y2="47" stroke-width="2.5" stroke-linecap="round"/>
-      </svg>
+    <div class="portada-scroll">
+      <div class="portada-contenido">
 
-      <form id="form-clave" autocomplete="off">
-        <input
-          type="password"
-          id="input-clave"
-          inputmode="numeric"
-          maxlength="6"
-          placeholder="Ingresa la clave"
-          autocomplete="off"
-        >
-        <button type="submit" class="btn-abrir">Abrir</button>
-        <p class="mensaje-error" id="mensaje-error">Esa no es... inténtalo de nuevo, mi amor.</p>
-      </form>
+        <!-- Ilustración: sobre + caja de regalo + lazo + corazón -->
+        <div class="regalo-ilustracion" aria-hidden="true">
+          <div class="regalo-sobre">
+            <div class="regalo-sobre-cuerpo"></div>
+            <div class="regalo-sobre-solapa"></div>
+          </div>
+          <div class="regalo-caja"></div>
+          <div class="regalo-lazo">
+            <div class="cola izq"></div>
+            <div class="cola der"></div>
+            <div class="asa izq"></div>
+            <div class="asa der"></div>
+            <div class="nudo"></div>
+          </div>
+          <svg class="regalo-corazon" viewBox="0 0 32 32">
+            <path class="relleno" d="M16 28C7 21 2 16.2 2 10.8 2 6.6 5.4 3.4 9.5 3.4c2.5 0 4.9 1.3 6.5 3.4 1.6-2.1 4-3.4 6.5-3.4 4.1 0 7.5 3.2 7.5 7.4C30 16.2 25 21 16 28z"/>
+            <path class="contorno" d="M16 23.5C10 19 6.5 15.6 6.5 11.6c0-2.7 2.2-4.9 4.9-4.9 1.7 0 3.3.9 4.4 2.3 1.1-1.4 2.7-2.3 4.4-2.3 2.7 0 4.9 2.2 4.9 4.9 0 4-3.5 7.4-9.5 11.9z"/>
+          </svg>
+        </div>
+
+        <div>
+          <p class="portada-titulo">Este mensaje es solo para ti</p>
+
+          <div class="clave-tarjeta" id="clave-tarjeta">
+            <div class="clave-tarjeta-adorno">✦</div>
+            <h1 class="clave-tarjeta-titulo">Para entrar</h1>
+            <p class="clave-tarjeta-sub">Introduce la contraseña que solo tú y yo sabemos</p>
+
+            <form id="form-clave" class="clave-fila" autocomplete="off">
+              <div class="clave-candado-badge" aria-hidden="true">
+                <svg viewBox="0 0 64 64" fill="none">
+                  <rect x="16" y="28" width="32" height="26" rx="4" stroke-width="4"/>
+                  <path d="M22 28V20a10 10 0 0 1 20 0v8" stroke-width="4" stroke-linecap="round"/>
+                </svg>
+              </div>
+              <div class="clave-digitos" id="clave-digitos">
+                <!-- 6 casillas, una por cada dígito de la clave -->
+                <span class="clave-digito-envoltura">
+                  <input class="clave-digito" type="text" inputmode="numeric" pattern="[0-9]*" maxlength="1" autocomplete="off" aria-label="Dígito 1">
+                  <span class="clave-corazon-mini">♥</span>
+                </span>
+                <span class="clave-digito-envoltura">
+                  <input class="clave-digito" type="text" inputmode="numeric" pattern="[0-9]*" maxlength="1" autocomplete="off" aria-label="Dígito 2">
+                  <span class="clave-corazon-mini">♥</span>
+                </span>
+                <span class="clave-digito-envoltura">
+                  <input class="clave-digito" type="text" inputmode="numeric" pattern="[0-9]*" maxlength="1" autocomplete="off" aria-label="Dígito 3">
+                  <span class="clave-corazon-mini">♥</span>
+                </span>
+                <span class="clave-digito-envoltura">
+                  <input class="clave-digito" type="text" inputmode="numeric" pattern="[0-9]*" maxlength="1" autocomplete="off" aria-label="Dígito 4">
+                  <span class="clave-corazon-mini">♥</span>
+                </span>
+                <span class="clave-digito-envoltura">
+                  <input class="clave-digito" type="text" inputmode="numeric" pattern="[0-9]*" maxlength="1" autocomplete="off" aria-label="Dígito 5">
+                  <span class="clave-corazon-mini">♥</span>
+                </span>
+                <span class="clave-digito-envoltura">
+                  <input class="clave-digito" type="text" inputmode="numeric" pattern="[0-9]*" maxlength="1" autocomplete="off" aria-label="Dígito 6">
+                  <span class="clave-corazon-mini">♥</span>
+                </span>
+              </div>
+            </form>
+
+            <p class="mensaje-error" id="mensaje-error">Esa no es... inténtalo de nuevo, mi amor.</p>
+          </div>
+        </div>
+
+      </div>
     </div>
   </section>
 
@@ -779,50 +1078,101 @@
     pantalla.classList.add('activa');
   }
 
-  /* ---------- Estrellas de fondo (pantalla 1) ---------- */
-  (function generarEstrellas(){
-    var contenedor = document.getElementById('cielo-estrellas');
-    var total = 55;
+  /* ---------- Corazones flotantes de fondo (pantalla 1) ---------- */
+  (function generarCorazones(){
+    var contenedor = document.getElementById('portada-fondo');
+    var total = 22;
     var frag = document.createDocumentFragment();
     for (var i = 0; i < total; i++){
-      var estrella = document.createElement('span');
-      estrella.className = 'estrella';
-      estrella.style.left = (Math.random() * 100) + '%';
-      estrella.style.top = (Math.random() * 100) + '%';
-      estrella.style.animationDelay = (Math.random() * 4) + 's';
-      var tam = (Math.random() * 1.6 + 1).toFixed(1);
-      estrella.style.width = tam + 'px';
-      estrella.style.height = tam + 'px';
-      frag.appendChild(estrella);
+      var corazon = document.createElement('span');
+      corazon.className = 'corazon-flotante';
+      corazon.textContent = '♥';
+      corazon.style.left = (Math.random() * 100) + '%';
+      corazon.style.top = (Math.random() * 100) + '%';
+      corazon.style.animationDelay = (Math.random() * 7) + 's';
+      corazon.style.animationDuration = (5 + Math.random() * 4) + 's';
+      var tam = (Math.random() * 10 + 10).toFixed(0);
+      corazon.style.fontSize = tam + 'px';
+      frag.appendChild(corazon);
     }
     contenedor.appendChild(frag);
   })();
 
-  /* ---------- Pantalla 1: validar clave ---------- */
-  var formClave = document.getElementById('form-clave');
-  var inputClave = document.getElementById('input-clave');
-  var claveCaja = document.getElementById('clave-caja');
+  /* ---------- Pantalla 1: validar clave (6 casillas tipo código) ---------- */
+  var claveTarjeta = document.getElementById('clave-tarjeta');
   var mensajeError = document.getElementById('mensaje-error');
+  var digitos = Array.prototype.slice.call(document.querySelectorAll('.clave-digito'));
 
-  formClave.addEventListener('submit', function(e){
+  document.getElementById('form-clave').addEventListener('submit', function(e){
     e.preventDefault();
-    var valor = inputClave.value.trim();
+  });
+
+  function valorActual(){
+    return digitos.map(function(d){ return d.value; }).join('');
+  }
+
+  function limpiarDigitos(){
+    digitos.forEach(function(d){ d.value = ''; d.classList.remove('lleno'); });
+    digitos[0].focus();
+  }
+
+  function verificarClave(){
+    var valor = valorActual();
+    if (valor.length < CLAVE_CORRECTA.length) return;
 
     if (valor === CLAVE_CORRECTA){
       irA(pantallaSobre);
     } else {
       mensajeError.classList.add('visible');
-      claveCaja.classList.remove('temblar');
+      claveTarjeta.classList.remove('temblar');
       // Forzar reflow para poder reiniciar la animación
-      void claveCaja.offsetWidth;
-      claveCaja.classList.add('temblar');
-      inputClave.value = '';
-      inputClave.focus();
+      void claveTarjeta.offsetWidth;
+      claveTarjeta.classList.add('temblar');
+      limpiarDigitos();
     }
+  }
+
+  digitos.forEach(function(digito, indice){
+    digito.addEventListener('input', function(){
+      digito.value = digito.value.replace(/[^0-9]/g, '').slice(0, 1);
+      digito.classList.toggle('lleno', digito.value.length === 1);
+
+      if (digito.value && indice < digitos.length - 1){
+        digitos[indice + 1].focus();
+      }
+      if (indice === digitos.length - 1 && digito.value){
+        verificarClave();
+      }
+    });
+
+    digito.addEventListener('keydown', function(e){
+      if (e.key === 'Backspace' && !digito.value && indice > 0){
+        digitos[indice - 1].focus();
+        digitos[indice - 1].value = '';
+        digitos[indice - 1].classList.remove('lleno');
+      }
+      if (e.key === 'Enter'){
+        e.preventDefault();
+        verificarClave();
+      }
+    });
+
+    digito.addEventListener('paste', function(e){
+      e.preventDefault();
+      var texto = (e.clipboardData || window.clipboardData).getData('text').replace(/[^0-9]/g, '');
+      if (!texto) return;
+      digitos.forEach(function(d, i){
+        d.value = texto[i] || '';
+        d.classList.toggle('lleno', !!d.value);
+      });
+      var siguiente = Math.min(texto.length, digitos.length - 1);
+      digitos[siguiente].focus();
+      if (texto.length >= digitos.length) verificarClave();
+    });
   });
 
-  claveCaja.addEventListener('animationend', function(){
-    claveCaja.classList.remove('temblar');
+  claveTarjeta.addEventListener('animationend', function(){
+    claveTarjeta.classList.remove('temblar');
   });
 
   /* ---------- Pantalla 2: abrir el sobre ---------- */
