@@ -1,0 +1,848 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no">
+<title>Para ti, mi amor</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ctext x='16' y='24' font-size='24' text-anchor='middle'%3E%E2%9D%A4%EF%B8%8F%3C/text%3E%3C/svg%3E">
+
+<!-- Únicas dependencias externas: tipografías de Google Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Dancing+Script:wght@500;600;700&family=Lora:ital,wght@0,400;0,500;0,600;1,400&family=Playfair+Display:ital,wght@0,600;0,700;1,500&display=swap" rel="stylesheet">
+
+<style>
+  /* ============================================================
+     VARIABLES DE COLOR — paleta romántica elegante
+     ============================================================ */
+  :root{
+    --vino-oscuro:#2a0e17;
+    --vino:#4a1224;
+    --vino-suave:#6e1b34;
+    --negro-profundo:#0c0608;
+    --crema:#f7ecd9;
+    --crema-suave:#f0e2c8;
+    --dorado:#cba15a;
+    --dorado-claro:#e6c98a;
+    --dorado-opaco:#a9834a;
+    --texto-oscuro:#3a2416;
+    --sombra:rgba(0,0,0,.45);
+  }
+
+  *{ box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
+
+  html,body{
+    margin:0;
+    padding:0;
+    height:100%;
+    background:var(--negro-profundo);
+    color:var(--crema);
+    font-family:'Lora', serif;
+    overflow:hidden;
+  }
+
+  body.scroll-enabled{ overflow:auto; }
+
+  a{ color:inherit; }
+
+  .cursiva{
+    font-family:'Great Vibes', cursive;
+    font-weight:400;
+  }
+
+  .cursiva-sub{
+    font-family:'Dancing Script', cursive;
+    font-weight:600;
+  }
+
+  .titulo-serif{
+    font-family:'Playfair Display', serif;
+  }
+
+  img{ max-width:100%; display:block; }
+
+  /* ============================================================
+     CONTENEDOR GENERAL DE PANTALLAS
+     ============================================================ */
+  #app{
+    position:relative;
+    width:100%;
+    min-height:100vh;
+  }
+
+  .pantalla{
+    position:fixed;
+    inset:0;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    opacity:0;
+    visibility:hidden;
+    pointer-events:none;
+    transition:opacity 1s ease;
+    z-index:1;
+  }
+
+  .pantalla.activa{
+    opacity:1;
+    visibility:visible;
+    pointer-events:auto;
+    z-index:5;
+  }
+
+  /* ============================================================
+     PANTALLA 1 — CANDADO / CLAVE
+     ============================================================ */
+  #pantalla-clave{
+    background:
+      radial-gradient(ellipse at 50% 20%, rgba(203,161,90,.10), transparent 55%),
+      radial-gradient(ellipse at 20% 85%, rgba(110,27,52,.35), transparent 60%),
+      linear-gradient(160deg, var(--negro-profundo) 0%, var(--vino-oscuro) 55%, var(--negro-profundo) 100%);
+    overflow:hidden;
+  }
+
+  .cielo-estrellas{
+    position:absolute;
+    inset:0;
+    overflow:hidden;
+    pointer-events:none;
+  }
+
+  .estrella{
+    position:absolute;
+    width:2px;
+    height:2px;
+    background:var(--dorado-claro);
+    border-radius:50%;
+    opacity:.25;
+    animation:parpadeo 4s ease-in-out infinite;
+  }
+
+  @keyframes parpadeo{
+    0%,100%{ opacity:.15; transform:scale(1); }
+    50%{ opacity:.85; transform:scale(1.6); }
+  }
+
+  .constelacion-corazon{
+    position:absolute;
+    top:50%;
+    left:50%;
+    width:min(520px, 140vw);
+    transform:translate(-50%,-50%);
+    opacity:.14;
+    pointer-events:none;
+  }
+
+  .clave-caja{
+    position:relative;
+    z-index:2;
+    width:min(90vw, 380px);
+    text-align:center;
+    padding:0 1rem;
+  }
+
+  .clave-caja.temblar{
+    animation:shake .55s ease;
+  }
+
+  @keyframes shake{
+    10%,90%{ transform:translateX(-2px); }
+    20%,80%{ transform:translateX(4px); }
+    30%,50%,70%{ transform:translateX(-8px); }
+    40%,60%{ transform:translateX(8px); }
+  }
+
+  .clave-titulo{
+    font-size:clamp(1.05rem, 3.6vw, 1.35rem);
+    letter-spacing:.06em;
+    color:var(--crema-suave);
+    font-style:italic;
+    margin:0 0 1.6rem;
+    font-family:'Lora', serif;
+    opacity:.92;
+  }
+
+  .candado-icono{
+    width:58px;
+    height:58px;
+    margin:0 auto 1.6rem;
+    filter:drop-shadow(0 4px 10px rgba(0,0,0,.5));
+  }
+
+  .candado-icono path,
+  .candado-icono rect{
+    stroke:var(--dorado-claro);
+  }
+
+  form#form-clave{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:1.1rem;
+  }
+
+  #input-clave{
+    width:100%;
+    max-width:220px;
+    text-align:center;
+    background:rgba(255,255,255,.04);
+    border:1px solid rgba(203,161,90,.45);
+    border-radius:999px;
+    padding:.85rem 1.2rem;
+    font-size:1.4rem;
+    letter-spacing:.5em;
+    color:var(--dorado-claro);
+    outline:none;
+    transition:border-color .3s, box-shadow .3s;
+    font-family:'Lora', serif;
+  }
+
+  #input-clave::placeholder{
+    letter-spacing:.06em;
+    font-size:.85rem;
+    color:rgba(247,236,217,.35);
+  }
+
+  #input-clave:focus{
+    border-color:var(--dorado);
+    box-shadow:0 0 0 4px rgba(203,161,90,.12);
+  }
+
+  .btn-abrir{
+    background:linear-gradient(135deg, var(--dorado-claro), var(--dorado-opaco));
+    color:var(--negro-profundo);
+    border:none;
+    border-radius:999px;
+    padding:.75rem 2.4rem;
+    font-size:.95rem;
+    letter-spacing:.08em;
+    text-transform:uppercase;
+    font-weight:600;
+    cursor:pointer;
+    transition:transform .25s ease, box-shadow .25s ease;
+    box-shadow:0 8px 20px rgba(203,161,90,.25);
+  }
+
+  .btn-abrir:hover{
+    transform:translateY(-2px);
+    box-shadow:0 12px 26px rgba(203,161,90,.35);
+  }
+
+  .btn-abrir:active{
+    transform:translateY(0);
+  }
+
+  .mensaje-error{
+    min-height:1.4em;
+    font-size:.92rem;
+    font-style:italic;
+    color:var(--dorado-claro);
+    opacity:0;
+    transition:opacity .4s ease;
+  }
+
+  .mensaje-error.visible{
+    opacity:1;
+  }
+
+  /* ============================================================
+     PANTALLA 2 — EL SOBRE
+     ============================================================ */
+  #pantalla-sobre{
+    background:
+      radial-gradient(ellipse at 50% 15%, rgba(203,161,90,.10), transparent 55%),
+      linear-gradient(160deg, var(--negro-profundo) 0%, var(--vino-oscuro) 60%, var(--negro-profundo) 100%);
+    flex-direction:column;
+    gap:2.2rem;
+    text-align:center;
+    padding:2rem;
+  }
+
+  .sobre-texto{
+    font-size:clamp(1.1rem, 4vw, 1.5rem);
+    color:var(--crema-suave);
+    font-style:italic;
+    opacity:.92;
+    letter-spacing:.03em;
+  }
+
+  .sobre-envoltura{
+    perspective:1000px;
+  }
+
+  .sobre{
+    position:relative;
+    width:min(78vw, 300px);
+    height:min(52vw, 200px);
+    cursor:pointer;
+    animation:flotar 4.5s ease-in-out infinite;
+  }
+
+  .sobre.abriendo{
+    animation:none;
+  }
+
+  @keyframes flotar{
+    0%,100%{ transform:translateY(0); }
+    50%{ transform:translateY(-14px); }
+  }
+
+  .sobre-cuerpo{
+    position:absolute;
+    inset:0;
+    background:linear-gradient(155deg, var(--crema) 0%, var(--crema-suave) 100%);
+    border-radius:8px;
+    box-shadow:0 25px 45px rgba(0,0,0,.55);
+    overflow:hidden;
+  }
+
+  .sobre-cuerpo::before,
+  .sobre-cuerpo::after{
+    content:"";
+    position:absolute;
+    top:0;
+    width:60%;
+    height:100%;
+    background:linear-gradient(rgba(0,0,0,.06), rgba(0,0,0,0));
+  }
+
+  .sobre-cuerpo::before{
+    left:-10%;
+    transform:skewX(18deg);
+  }
+
+  .sobre-cuerpo::after{
+    right:-10%;
+    transform:skewX(-18deg);
+  }
+
+  .sobre-carta{
+    position:absolute;
+    left:9%;
+    right:9%;
+    top:8%;
+    height:84%;
+    background:linear-gradient(180deg, #fffaf0, var(--crema));
+    border-radius:3px;
+    box-shadow:0 6px 16px rgba(0,0,0,.25);
+    z-index:2;
+    transition:transform 1.1s cubic-bezier(.6,-0.28,.44,1.35), opacity .4s ease;
+  }
+
+  .sobre-carta::before{
+    content:"";
+    position:absolute;
+    top:14%;
+    left:10%;
+    right:10%;
+    height:2px;
+    background:rgba(74,18,36,.15);
+    box-shadow:
+      0 12px 0 rgba(74,18,36,.12),
+      0 24px 0 rgba(74,18,36,.12),
+      0 36px 0 rgba(74,18,36,.08);
+  }
+
+  .sobre-solapa{
+    position:absolute;
+    top:0;
+    left:0;
+    width:100%;
+    height:56%;
+    background:linear-gradient(160deg, var(--vino-suave), var(--vino));
+    clip-path:polygon(0 0, 100% 0, 50% 100%);
+    transform-origin:top center;
+    transition:transform 1s cubic-bezier(.6,.05,.4,1);
+    z-index:3;
+    box-shadow:0 6px 14px rgba(0,0,0,.3);
+  }
+
+  .sello-cera{
+    position:absolute;
+    top:34%;
+    left:50%;
+    width:34px;
+    height:34px;
+    background:radial-gradient(circle at 35% 30%, var(--dorado-claro), var(--dorado-opaco) 70%);
+    border-radius:50%;
+    transform:translate(-50%,-50%);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:15px;
+    color:var(--vino-oscuro);
+    box-shadow:0 3px 8px rgba(0,0,0,.4);
+    z-index:4;
+    transition:opacity .3s ease;
+  }
+
+  .sobre.abriendo .sobre-solapa{
+    transform:rotateX(-165deg);
+  }
+
+  .sobre.abriendo .sello-cera{
+    opacity:0;
+  }
+
+  .sobre.abriendo .sobre-carta{
+    transform:translateY(-135%) rotate(-2deg);
+  }
+
+  /* ============================================================
+     PANTALLA 3 — LA CARTA
+     ============================================================ */
+  #pantalla-carta{
+    display:block;
+    overflow-y:auto;
+    -webkit-overflow-scrolling:touch;
+    background:
+      radial-gradient(ellipse at 50% 0%, rgba(203,161,90,.08), transparent 50%),
+      linear-gradient(180deg, var(--negro-profundo), var(--vino-oscuro) 12%, var(--vino-oscuro) 88%, var(--negro-profundo));
+  }
+
+  .carta-papel{
+    max-width:720px;
+    margin:0 auto;
+    padding:clamp(2.4rem, 8vw, 4.5rem) clamp(1.4rem, 6vw, 3rem) 5rem;
+  }
+
+  .carta-encabezado{
+    text-align:center;
+    margin-bottom:3.2rem;
+  }
+
+  .carta-encabezado .adorno{
+    font-size:1.6rem;
+    color:var(--dorado);
+    margin-bottom:.6rem;
+    opacity:.85;
+  }
+
+  .mensaje-principal{
+    font-family:'Great Vibes', cursive;
+    font-size:clamp(1.7rem, 5.4vw, 2.6rem);
+    line-height:1.5;
+    color:var(--crema);
+    text-align:center;
+    max-width:560px;
+    margin:0 auto;
+  }
+
+  .divisor{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:.8rem;
+    margin:3rem 0;
+    color:var(--dorado);
+    opacity:.7;
+  }
+
+  .divisor::before,
+  .divisor::after{
+    content:"";
+    height:1px;
+    width:60px;
+    background:linear-gradient(90deg, transparent, var(--dorado), transparent);
+  }
+
+  .bloque{
+    border-radius:18px;
+    padding:clamp(1.6rem, 5vw, 2.4rem);
+    margin-bottom:2.6rem;
+    box-shadow:0 18px 40px rgba(0,0,0,.35);
+  }
+
+  .bloque-icono{
+    width:34px;
+    height:34px;
+    margin-bottom:.9rem;
+  }
+
+  .bloque-titulo{
+    font-family:'Dancing Script', cursive;
+    font-size:clamp(1.5rem, 4.5vw, 1.9rem);
+    font-weight:700;
+    margin:0 0 1rem;
+  }
+
+  .bloque-texto{
+    font-family:'Lora', serif;
+    font-size:clamp(1rem, 2.6vw, 1.08rem);
+    line-height:1.85;
+    margin:0;
+  }
+
+  /* Bloque: mensaje de amor */
+  .bloque-amor{
+    background:linear-gradient(155deg, rgba(203,161,90,.14), rgba(74,18,36,.35));
+    border:1px solid rgba(203,161,90,.25);
+  }
+  .bloque-amor .bloque-titulo{ color:var(--dorado-claro); }
+  .bloque-amor .bloque-texto{ color:var(--crema-suave); }
+  .bloque-amor .bloque-icono path{ fill:var(--dorado-claro); }
+
+  /* Bloque: mensaje difícil / triste — tono más oscuro e íntimo */
+  .bloque-triste{
+    background:linear-gradient(155deg, rgba(12,6,8,.9), rgba(42,14,23,.92));
+    border:1px solid rgba(203,161,90,.12);
+  }
+  .bloque-triste .bloque-titulo{ color:rgba(230,201,138,.8); }
+  .bloque-triste .bloque-texto{ color:rgba(247,236,217,.78); }
+  .bloque-triste .bloque-icono path,
+  .bloque-triste .bloque-icono line{ stroke:rgba(230,201,138,.55); }
+
+  /* Bloque: reconciliación — cálido y esperanzador */
+  .bloque-reconciliacion{
+    background:linear-gradient(155deg, rgba(203,161,90,.22), rgba(110,27,52,.4));
+    border:1px solid rgba(230,201,138,.35);
+  }
+  .bloque-reconciliacion .bloque-titulo{ color:var(--dorado-claro); }
+  .bloque-reconciliacion .bloque-texto{ color:var(--crema); }
+  .bloque-reconciliacion .bloque-icono{ color:var(--dorado-claro); }
+  .bloque-reconciliacion .bloque-icono path{ fill:var(--dorado-claro); }
+
+  /* Galería de fotos */
+  .galeria-titulo{
+    font-family:'Dancing Script', cursive;
+    font-size:clamp(1.5rem, 4.5vw, 1.9rem);
+    font-weight:700;
+    color:var(--dorado-claro);
+    text-align:center;
+    margin:0 0 1.6rem;
+  }
+
+  .galeria-grid{
+    display:grid;
+    grid-template-columns:repeat(2, 1fr);
+    gap:.9rem;
+    margin-bottom:1rem;
+  }
+
+  @media (min-width:560px){
+    .galeria-grid{ grid-template-columns:repeat(3, 1fr); }
+  }
+
+  .foto-marco{
+    position:relative;
+    aspect-ratio:1/1;
+    border-radius:12px;
+    overflow:hidden;
+    border:3px solid rgba(203,161,90,.35);
+    box-shadow:0 10px 24px rgba(0,0,0,.4);
+    transition:transform .35s ease, box-shadow .35s ease, border-color .35s ease;
+  }
+
+  .foto-marco:hover,
+  .foto-marco:active{
+    transform:scale(1.045) translateY(-3px);
+    box-shadow:0 16px 34px rgba(0,0,0,.55);
+    border-color:var(--dorado-claro);
+  }
+
+  .foto-marco img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+  }
+
+  .posdata{
+    text-align:center;
+    font-family:'Lora', serif;
+    font-style:italic;
+    font-size:.92rem;
+    color:rgba(247,236,217,.65);
+    margin:0 0 1rem;
+  }
+
+  .carta-cierre{
+    text-align:center;
+    margin-top:3.6rem;
+  }
+
+  .carta-cierre p{
+    font-family:'Great Vibes', cursive;
+    font-size:clamp(2rem, 7vw, 3rem);
+    color:var(--dorado-claro);
+    margin:0;
+  }
+
+  .carta-cierre .firma-corazon{
+    margin-top:.6rem;
+    font-size:1.1rem;
+    color:var(--dorado);
+    opacity:.8;
+  }
+
+  /* Scrollbar discreto para la carta */
+  #pantalla-carta::-webkit-scrollbar{ width:8px; }
+  #pantalla-carta::-webkit-scrollbar-thumb{ background:rgba(203,161,90,.35); border-radius:8px; }
+  #pantalla-carta::-webkit-scrollbar-track{ background:transparent; }
+
+  @media (max-width:380px){
+    .clave-caja{ padding:0 .5rem; }
+  }
+</style>
+</head>
+<body>
+
+<div id="app">
+
+  <!-- ======================================================
+       PANTALLA 1 — CANDADO / CLAVE
+       ====================================================== -->
+  <section id="pantalla-clave" class="pantalla activa">
+    <div class="cielo-estrellas" id="cielo-estrellas"></div>
+
+    <!-- Constelación decorativa discreta en forma de corazón -->
+    <svg class="constelacion-corazon" viewBox="0 0 300 260" aria-hidden="true">
+      <polyline points="150,230 60,150 30,100 45,55 85,40 120,60 150,95 180,60 215,40 255,55 270,100 240,150"
+        fill="none" stroke="#e6c98a" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/>
+      <g fill="#e6c98a">
+        <circle cx="150" cy="230" r="2.4"/>
+        <circle cx="60" cy="150" r="2"/>
+        <circle cx="30" cy="100" r="2"/>
+        <circle cx="45" cy="55" r="2"/>
+        <circle cx="85" cy="40" r="2"/>
+        <circle cx="120" cy="60" r="2"/>
+        <circle cx="150" cy="95" r="2.4"/>
+        <circle cx="180" cy="60" r="2"/>
+        <circle cx="215" cy="40" r="2"/>
+        <circle cx="255" cy="55" r="2"/>
+        <circle cx="270" cy="100" r="2"/>
+        <circle cx="240" cy="150" r="2"/>
+      </g>
+    </svg>
+
+    <div class="clave-caja" id="clave-caja">
+      <p class="clave-titulo">Este mensaje es solo para ti</p>
+
+      <svg class="candado-icono" viewBox="0 0 64 64" fill="none" aria-hidden="true">
+        <rect x="16" y="28" width="32" height="26" rx="4" stroke-width="2.5"/>
+        <path d="M22 28V20a10 10 0 0 1 20 0v8" stroke-width="2.5" stroke-linecap="round"/>
+        <circle cx="32" cy="39" r="3.4" fill="#e6c98a"/>
+        <line x1="32" y1="42" x2="32" y2="47" stroke-width="2.5" stroke-linecap="round"/>
+      </svg>
+
+      <form id="form-clave" autocomplete="off">
+        <input
+          type="password"
+          id="input-clave"
+          inputmode="numeric"
+          maxlength="6"
+          placeholder="Ingresa la clave"
+          autocomplete="off"
+        >
+        <button type="submit" class="btn-abrir">Abrir</button>
+        <p class="mensaje-error" id="mensaje-error">Esa no es... inténtalo de nuevo, mi amor.</p>
+      </form>
+    </div>
+  </section>
+
+  <!-- ======================================================
+       PANTALLA 2 — EL SOBRE
+       ====================================================== -->
+  <section id="pantalla-sobre" class="pantalla">
+    <p class="sobre-texto">Tienes un mensaje esperando por ti</p>
+
+    <div class="sobre-envoltura">
+      <div class="sobre" id="sobre">
+        <div class="sobre-carta"></div>
+        <div class="sobre-cuerpo"></div>
+        <div class="sobre-solapa"></div>
+        <div class="sello-cera">♥</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================================================
+       PANTALLA 3 — LA CARTA Y LOS MENSAJES
+       ====================================================== -->
+  <section id="pantalla-carta" class="pantalla">
+    <div class="carta-papel">
+
+      <!-- 1. Encabezado / mensaje principal -->
+      <div class="carta-encabezado">
+        <div class="adorno">❧</div>
+        <p class="mensaje-principal">
+          Espero te guste, mi amor. Gracias por darme la oportunidad de decirte lo mucho que te amo.
+          Por siempre serás el gran amor de mi vida y la mujer de mi vida.
+        </p>
+      </div>
+
+      <div class="divisor">✦</div>
+
+      <!-- 2. Mensaje de amor -->
+      <div class="bloque bloque-amor">
+        <svg class="bloque-icono" viewBox="0 0 32 32" aria-hidden="true">
+          <path d="M16 28C7 21 2 16.2 2 10.8 2 6.6 5.4 3.4 9.5 3.4c2.5 0 4.9 1.3 6.5 3.4 1.6-2.1 4-3.4 6.5-3.4 4.1 0 7.5 3.2 7.5 7.4C30 16.2 25 21 16 28z"/>
+        </svg>
+        <h2 class="bloque-titulo">Lo que siento por ti</h2>
+        <!-- MENSAJE DE AMOR - EDITAR AQUÍ -->
+        <p class="bloque-texto">
+          Contigo aprendí que el amor no es un instante, sino miles de pequeños momentos que decidimos vivir juntos.
+          Eres esa persona con la que todo se siente en calma, esa risa que reconozco entre mil,
+          ese hogar que no tiene dirección, solo tu nombre. Gracias por ser mi lugar seguro.
+        </p>
+      </div>
+
+      <!-- 3. Un momento difícil -->
+      <div class="bloque bloque-triste">
+        <svg class="bloque-icono" viewBox="0 0 32 32" fill="none" aria-hidden="true">
+          <path d="M16 27C8 21 3 16.5 3 11.3 3 7.3 6.1 4.4 9.9 4.4c2.3 0 4.5 1.1 6.1 3 1.6-1.9 3.8-3 6.1-3C25.9 4.4 29 7.3 29 11.3 29 16.5 24 21 16 27z" stroke-width="1.6"/>
+          <line x1="16" y1="14" x2="16" y2="19" stroke-width="1.6" stroke-linecap="round"/>
+        </svg>
+        <h2 class="bloque-titulo">Hay algo que quiero decirte</h2>
+        <!-- MENSAJE DE TRISTEZA - EDITAR AQUÍ -->
+        <p class="bloque-texto">
+          Hay algo que llevo guardado desde hace tiempo y quiero que lo sepas: hubo días en los que sentí
+          que te fallé, momentos en los que el silencio dijo más de lo que yo fui capaz de expresar.
+          No quiero que ese peso siga entre nosotros. Lo siento, de verdad.
+        </p>
+      </div>
+
+      <!-- 4. Reconciliación / Perdón -->
+      <div class="bloque bloque-reconciliacion">
+        <svg class="bloque-icono" viewBox="0 0 32 32" aria-hidden="true">
+          <path d="M16 28C7 21 2 16.2 2 10.8 2 6.6 5.4 3.4 9.5 3.4c2.5 0 4.9 1.3 6.5 3.4 1.6-2.1 4-3.4 6.5-3.4 4.1 0 7.5 3.2 7.5 7.4C30 16.2 25 21 16 28z"/>
+          <path d="M4 5l1.4 1.4M28 5l-1.4 1.4M16 1v2" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+        </svg>
+        <h2 class="bloque-titulo">Quiero empezar de nuevo contigo</h2>
+        <!-- MENSAJE DE RECONCILIACIÓN - EDITAR AQUÍ -->
+        <p class="bloque-texto">
+          Quiero empezar de nuevo contigo, no para borrar lo vivido, sino para construir algo más fuerte
+          con lo que aprendimos. Prometo escucharte más, cuidar mejor lo nuestro y no dejar que el orgullo
+          hable antes que el amor. Sigues siendo, sin duda, la persona que elijo cada día.
+        </p>
+      </div>
+
+      <div class="divisor">✦</div>
+
+      <!-- 5. Galería de fotos -->
+      <h2 class="galeria-titulo">Nuestros recuerdos</h2>
+      <div class="galeria-grid">
+        <div class="foto-marco">
+          <!-- FOTO 1 - REEMPLAZAR BASE64 AQUÍ -->
+          <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyMDAgMjAwIj48ZGVmcz48bGluZWFyR3JhZGllbnQgaWQ9ImciIHgxPSIwIiB5MT0iMCIgeDI9IjEiIHkyPSIxIj48c3RvcCBvZmZzZXQ9IjAiIHN0b3AtY29sb3I9IiM0YTEyMjQiLz48c3RvcCBvZmZzZXQ9IjEiIHN0b3AtY29sb3I9IiMyYTBlMTciLz48L2xpbmVhckdyYWRpZW50PjwvZGVmcz48cmVjdCB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgZmlsbD0idXJsKCNnKSIvPjx0ZXh0IHg9IjUwJSIgeT0iNTIlIiBmb250LXNpemU9IjQ0IiBmaWxsPSIjZTZjOThhIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LWZhbWlseT0ic2VyaWYiPuKZpTwvdGV4dD48L3N2Zz4=" alt="Foto 1">
+        </div>
+        <div class="foto-marco">
+          <!-- FOTO 2 - REEMPLAZAR BASE64 AQUÍ -->
+          <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyMDAgMjAwIj48ZGVmcz48bGluZWFyR3JhZGllbnQgaWQ9ImciIHgxPSIwIiB5MT0iMCIgeDI9IjEiIHkyPSIxIj48c3RvcCBvZmZzZXQ9IjAiIHN0b3AtY29sb3I9IiM2ZTFiMzQiLz48c3RvcCBvZmZzZXQ9IjEiIHN0b3AtY29sb3I9IiMwYzA2MDgiLz48L2xpbmVhckdyYWRpZW50PjwvZGVmcz48cmVjdCB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgZmlsbD0idXJsKCNnKSIvPjx0ZXh0IHg9IjUwJSIgeT0iNTIlIiBmb250LXNpemU9IjQ0IiBmaWxsPSIjZTZjOThhIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LWZhbWlseT0ic2VyaWYiPuKZpTwvdGV4dD48L3N2Zz4=" alt="Foto 2">
+        </div>
+        <div class="foto-marco">
+          <!-- FOTO 3 - REEMPLAZAR BASE64 AQUÍ -->
+          <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyMDAgMjAwIj48ZGVmcz48bGluZWFyR3JhZGllbnQgaWQ9ImciIHgxPSIwIiB5MT0iMCIgeDI9IjEiIHkyPSIxIj48c3RvcCBvZmZzZXQ9IjAiIHN0b3AtY29sb3I9IiNhOTgzNGEiLz48c3RvcCBvZmZzZXQ9IjEiIHN0b3AtY29sb3I9IiM0YTEyMjQiLz48L2xpbmVhckdyYWRpZW50PjwvZGVmcz48cmVjdCB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgZmlsbD0idXJsKCNnKSIvPjx0ZXh0IHg9IjUwJSIgeT0iNTIlIiBmb250LXNpemU9IjQ0IiBmaWxsPSIjZjdlY2Q5IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LWZhbWlseT0ic2VyaWYiPuKZpTwvdGV4dD48L3N2Zz4=" alt="Foto 3">
+        </div>
+        <div class="foto-marco">
+          <!-- FOTO 4 - REEMPLAZAR BASE64 AQUÍ -->
+          <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyMDAgMjAwIj48ZGVmcz48bGluZWFyR3JhZGllbnQgaWQ9ImciIHgxPSIwIiB5MT0iMCIgeDI9IjEiIHkyPSIxIj48c3RvcCBvZmZzZXQ9IjAiIHN0b3AtY29sb3I9IiMyYTBlMTciLz48c3RvcCBvZmZzZXQ9IjEiIHN0b3AtY29sb3I9IiM2ZTFiMzQiLz48L2xpbmVhckdyYWRpZW50PjwvZGVmcz48cmVjdCB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgZmlsbD0idXJsKCNnKSIvPjx0ZXh0IHg9IjUwJSIgeT0iNTIlIiBmb250LXNpemU9IjQ0IiBmaWxsPSIjZTZjOThhIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LWZhbWlseT0ic2VyaWYiPuKZpTwvdGV4dD48L3N2Zz4=" alt="Foto 4">
+        </div>
+        <div class="foto-marco">
+          <!-- FOTO 5 - REEMPLAZAR BASE64 AQUÍ -->
+          <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyMDAgMjAwIj48ZGVmcz48bGluZWFyR3JhZGllbnQgaWQ9ImciIHgxPSIwIiB5MT0iMCIgeDI9IjEiIHkyPSIxIj48c3RvcCBvZmZzZXQ9IjAiIHN0b3AtY29sb3I9IiM0YTEyMjQiLz48c3RvcCBvZmZzZXQ9IjEiIHN0b3AtY29sb3I9IiNhOTgzNGEiLz48L2xpbmVhckdyYWRpZW50PjwvZGVmcz48cmVjdCB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgZmlsbD0idXJsKCNnKSIvPjx0ZXh0IHg9IjUwJSIgeT0iNTIlIiBmb250LXNpemU9IjQ0IiBmaWxsPSIjZjdlY2Q5IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LWZhbWlseT0ic2VyaWYiPuKZpTwvdGV4dD48L3N2Zz4=" alt="Foto 5">
+        </div>
+        <div class="foto-marco">
+          <!-- FOTO 6 - REEMPLAZAR BASE64 AQUÍ -->
+          <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyMDAgMjAwIj48ZGVmcz48bGluZWFyR3JhZGllbnQgaWQ9ImciIHgxPSIwIiB5MT0iMCIgeDI9IjEiIHkyPSIxIj48c3RvcCBvZmZzZXQ9IjAiIHN0b3AtY29sb3I9IiMwYzA2MDgiLz48c3RvcCBvZmZzZXQ9IjEiIHN0b3AtY29sb3I9IiM2ZTFiMzQiLz48L2xpbmVhckdyYWRpZW50PjwvZGVmcz48cmVjdCB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgZmlsbD0idXJsKCNnKSIvPjx0ZXh0IHg9IjUwJSIgeT0iNTIlIiBmb250LXNpemU9IjQ0IiBmaWxsPSIjZTZjOThhIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LWZhbWlseT0ic2VyaWYiPuKZpTwvdGV4dD48L3N2Zz4=" alt="Foto 6">
+        </div>
+      </div>
+      <p class="posdata">Posdata: no tenemos muchas fotos de grandes juntos, pero tenemos nuestros mejores recuerdos.</p>
+
+      <div class="divisor">✦</div>
+
+      <!-- 6. Cierre -->
+      <div class="carta-cierre">
+        <!-- DESPEDIDA FINAL - EDITAR AQUÍ -->
+        <p>Tuya, siempre.</p>
+        <div class="firma-corazon">♥</div>
+      </div>
+
+    </div>
+  </section>
+
+</div>
+
+<script>
+(function(){
+  "use strict";
+
+  var CLAVE_CORRECTA = "201017";
+
+  var pantallaClave = document.getElementById('pantalla-clave');
+  var pantallaSobre = document.getElementById('pantalla-sobre');
+  var pantallaCarta = document.getElementById('pantalla-carta');
+
+  function irA(pantalla){
+    [pantallaClave, pantallaSobre, pantallaCarta].forEach(function(p){
+      p.classList.remove('activa');
+    });
+    pantalla.classList.add('activa');
+  }
+
+  /* ---------- Estrellas de fondo (pantalla 1) ---------- */
+  (function generarEstrellas(){
+    var contenedor = document.getElementById('cielo-estrellas');
+    var total = 55;
+    var frag = document.createDocumentFragment();
+    for (var i = 0; i < total; i++){
+      var estrella = document.createElement('span');
+      estrella.className = 'estrella';
+      estrella.style.left = (Math.random() * 100) + '%';
+      estrella.style.top = (Math.random() * 100) + '%';
+      estrella.style.animationDelay = (Math.random() * 4) + 's';
+      var tam = (Math.random() * 1.6 + 1).toFixed(1);
+      estrella.style.width = tam + 'px';
+      estrella.style.height = tam + 'px';
+      frag.appendChild(estrella);
+    }
+    contenedor.appendChild(frag);
+  })();
+
+  /* ---------- Pantalla 1: validar clave ---------- */
+  var formClave = document.getElementById('form-clave');
+  var inputClave = document.getElementById('input-clave');
+  var claveCaja = document.getElementById('clave-caja');
+  var mensajeError = document.getElementById('mensaje-error');
+
+  formClave.addEventListener('submit', function(e){
+    e.preventDefault();
+    var valor = inputClave.value.trim();
+
+    if (valor === CLAVE_CORRECTA){
+      irA(pantallaSobre);
+    } else {
+      mensajeError.classList.add('visible');
+      claveCaja.classList.remove('temblar');
+      // Forzar reflow para poder reiniciar la animación
+      void claveCaja.offsetWidth;
+      claveCaja.classList.add('temblar');
+      inputClave.value = '';
+      inputClave.focus();
+    }
+  });
+
+  claveCaja.addEventListener('animationend', function(){
+    claveCaja.classList.remove('temblar');
+  });
+
+  /* ---------- Pantalla 2: abrir el sobre ---------- */
+  var sobre = document.getElementById('sobre');
+  var yaAbierto = false;
+
+  sobre.addEventListener('click', function(){
+    if (yaAbierto) return;
+    yaAbierto = true;
+    sobre.classList.add('abriendo');
+
+    setTimeout(function(){
+      irA(pantallaCarta);
+      document.body.classList.add('scroll-enabled');
+      pantallaCarta.scrollTop = 0;
+    }, 1150);
+  });
+
+})();
+</script>
+
+</body>
+</html>
