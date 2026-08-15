@@ -682,37 +682,26 @@
     position:relative;
   }
 
-  /* Bloque: mensaje de amor */
-  .bloque-amor{
-    background:linear-gradient(180deg, #ffffff, rgba(201,162,77,.12));
+  /* Bloque final: síntesis emotiva después de las fotos */
+  .bloque-final{
+    background:linear-gradient(165deg, rgba(201,162,77,.18), rgba(157,192,230,.3));
     border-left-color:var(--p-dorado);
-    color:var(--p-dorado);
+    text-align:center;
   }
-  .bloque-amor .bloque-titulo{ color:var(--p-azul-oscuro); }
-  .bloque-amor .bloque-texto{ color:var(--p-texto); }
-  .bloque-amor .bloque-icono path{ fill:var(--p-dorado); }
-
-  /* Bloque: mensaje difícil / triste — tono más profundo e íntimo */
-  .bloque-triste{
-    background:linear-gradient(180deg, #ffffff, rgba(31,61,92,.1));
-    border-left-color:var(--p-azul-oscuro);
-    color:var(--p-azul-oscuro);
+  .bloque-final .bloque-cabecera{
+    flex-direction:column;
+    gap:.5rem;
+    margin-bottom:1.3rem;
   }
-  .bloque-triste .bloque-titulo{ color:var(--p-marino); }
-  .bloque-triste .bloque-texto{ color:rgba(31,61,92,.82); }
-  .bloque-triste .bloque-icono path,
-  .bloque-triste .bloque-icono line{ stroke:var(--p-azul-oscuro); }
-
-  /* Bloque: reconciliación — cálido y esperanzador */
-  .bloque-reconciliacion{
-    background:linear-gradient(180deg, #ffffff, rgba(201,162,77,.2));
-    border-left-color:var(--p-dorado);
-    color:var(--p-dorado);
+  .bloque-final .bloque-icono{ width:36px; height:36px; }
+  .bloque-final .bloque-titulo{ color:var(--p-azul-oscuro); }
+  .bloque-final .bloque-texto{
+    color:var(--p-texto);
+    font-size:clamp(1.02rem, 2.8vw, 1.16rem);
+    max-width:520px;
+    margin:0 auto;
   }
-  .bloque-reconciliacion .bloque-titulo{ color:var(--p-azul-oscuro); }
-  .bloque-reconciliacion .bloque-texto{ color:var(--p-texto); }
-  .bloque-reconciliacion .bloque-icono{ color:var(--p-dorado); }
-  .bloque-reconciliacion .bloque-icono path{ fill:var(--p-dorado); }
+  .bloque-final .bloque-icono path{ fill:var(--p-dorado); }
 
   /* Galería de fotos */
   .galeria-titulo{
@@ -1055,60 +1044,21 @@
 
       <div class="divisor">✦</div>
 
-      <!-- 2. Mensaje de amor -->
-      <div class="bloque bloque-amor">
+      <!-- 2. Mensaje final, después de repasar las fotos -->
+      <div class="bloque bloque-final">
         <div class="bloque-cabecera">
           <svg class="bloque-icono" viewBox="0 0 32 32" aria-hidden="true">
             <path d="M16 28C7 21 2 16.2 2 10.8 2 6.6 5.4 3.4 9.5 3.4c2.5 0 4.9 1.3 6.5 3.4 1.6-2.1 4-3.4 6.5-3.4 4.1 0 7.5 3.2 7.5 7.4C30 16.2 25 21 16 28z"/>
           </svg>
-          <h2 class="bloque-titulo">Lo que siento por ti</h2>
+          <h2 class="bloque-titulo">Lo que quiero que sepas</h2>
         </div>
-        <!-- MENSAJE DE AMOR - EDITAR AQUÍ -->
+        <!-- MENSAJE FINAL - EDITAR AQUÍ -->
         <p class="bloque-texto">
-          Contigo aprendí que el amor no cabe en una sola frase: es la suma de mil instantes pequeños que
-          elegimos vivir juntos, uno a la vez. Eres la calma en medio del ruido, la risa que reconocería
-          entre mil voces, el lugar al que siempre quiero volver aunque no tenga dirección, porque tu nombre
-          es mapa suficiente. Cada día a tu lado confirma lo que ya sabía desde el principio: encontrarte fue
-          la mejor casualidad de mi vida, y quedarme, la mejor decisión.
-        </p>
-      </div>
-
-      <!-- 3. Un momento difícil -->
-      <div class="bloque bloque-triste">
-        <div class="bloque-cabecera">
-          <svg class="bloque-icono" viewBox="0 0 32 32" fill="none" aria-hidden="true">
-            <path d="M16 27C8 21 3 16.5 3 11.3 3 7.3 6.1 4.4 9.9 4.4c2.3 0 4.5 1.1 6.1 3 1.6-1.9 3.8-3 6.1-3C25.9 4.4 29 7.3 29 11.3 29 16.5 24 21 16 27z" stroke-width="1.6"/>
-            <line x1="16" y1="14" x2="16" y2="19" stroke-width="1.6" stroke-linecap="round"/>
-          </svg>
-          <h2 class="bloque-titulo">Hay algo que quiero decirte</h2>
-        </div>
-        <!-- MENSAJE DE TRISTEZA - EDITAR AQUÍ -->
-        <p class="bloque-texto">
-          Hay algo que llevo guardado hace tiempo y necesito que lo sepas: hubo días en los que te fallé,
-          momentos en los que el silencio dijo más de lo que yo fui capaz de expresar, y heridas que dejé
-          crecer en lugar de sanar a tiempo. No quiero que ese peso siga viviendo entre nosotros ni un día más.
-          Lo siento, de verdad, con toda la honestidad que me queda: no busco justificarme, solo quiero que
-          sepas que lo veo, lo reconozco, y que cada palabra que viene después de esta es completamente real.
-        </p>
-      </div>
-
-      <!-- 4. Reconciliación / Perdón -->
-      <div class="bloque bloque-reconciliacion">
-        <div class="bloque-cabecera">
-          <svg class="bloque-icono" viewBox="0 0 32 32" aria-hidden="true">
-            <path d="M16 28C7 21 2 16.2 2 10.8 2 6.6 5.4 3.4 9.5 3.4c2.5 0 4.9 1.3 6.5 3.4 1.6-2.1 4-3.4 6.5-3.4 4.1 0 7.5 3.2 7.5 7.4C30 16.2 25 21 16 28z"/>
-            <path d="M4 5l1.4 1.4M28 5l-1.4 1.4M16 1v2" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
-          </svg>
-          <h2 class="bloque-titulo">Quiero empezar de nuevo contigo</h2>
-        </div>
-        <!-- MENSAJE DE RECONCILIACIÓN - EDITAR AQUÍ -->
-        <p class="bloque-texto">
-          Quiero empezar de nuevo contigo, no para borrar lo que vivimos, sino para construir algo más firme
-          con todo lo que aprendimos en el camino. Prometo escucharte más y hablar menos desde el orgullo,
-          cuidar lo nuestro como se cuida algo que no se quiere perder dos veces, y recordarte con hechos,
-          no solo con palabras, por qué sigues siendo tú. Porque aunque el tiempo pase y las cosas cambien,
-          hay algo que no ha cambiado ni va a cambiar: sigues siendo, sin ninguna duda, la persona que elijo
-          cada día, hoy y todos los que vengan.
+          Repasar estas fotos es repasarnos a nosotros: el amor bonito del principio, las risas, los días en
+          los que todo se sentía fácil, y también los que no lo fueron, esos de los que aprendí a base de
+          errores. Y aun así, después de todo, aquí seguimos. Gracias por quedarte, por perdonar, por seguir
+          eligiéndome incluso cuando no lo merecía. Hoy solo quiero decirte una cosa, sin rodeos: te amo,
+          te elijo, y quiero seguir escribiendo el resto de nuestra historia contigo.
         </p>
       </div>
 
