@@ -37,6 +37,7 @@
     --p-azul-oscuro:#3a628f;
     --p-marino:#1f3d5c;
     --p-dorado:#c9a24d;
+    --p-texto:#375773;
   }
 
   *{ box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
@@ -45,8 +46,8 @@
     margin:0;
     padding:0;
     height:100%;
-    background:var(--negro-profundo);
-    color:var(--crema);
+    background:var(--p-cielo);
+    color:var(--p-marino);
     font-family:'Lora', serif;
     overflow:hidden;
   }
@@ -169,6 +170,70 @@
     50%{ transform:translateY(-16px) rotate(8deg); opacity:.55; }
   }
 
+  /* Listones de raso decorativos, como en la imagen de referencia */
+  .cinta-decorativa{
+    position:fixed;
+    pointer-events:none;
+    z-index:1;
+    border-radius:999px;
+  }
+
+  .cinta-decorativa.uno{
+    left:-70px;
+    bottom:-50px;
+    width:360px;
+    height:44px;
+    background:linear-gradient(120deg, var(--p-azul-medio), #eaf3fb 45%, var(--p-azul-medio));
+    opacity:.4;
+    transform:rotate(-25deg);
+    box-shadow:0 10px 24px rgba(31,61,92,.15);
+  }
+
+  .cinta-decorativa.dos{
+    left:-100px;
+    bottom:-90px;
+    width:300px;
+    height:30px;
+    background:linear-gradient(120deg, var(--p-azul), #dcebfa 50%, var(--p-azul));
+    opacity:.28;
+    transform:rotate(-30deg);
+  }
+
+  .cinta-decorativa.tres{
+    right:-90px;
+    top:-60px;
+    width:280px;
+    height:34px;
+    background:linear-gradient(120deg, var(--p-azul-medio), #eaf3fb 50%, var(--p-azul-medio));
+    opacity:.25;
+    transform:rotate(20deg);
+  }
+
+  /* Corazones grandes acentuados, tipo los de la imagen */
+  .corazon-grande{
+    position:absolute;
+    z-index:1;
+    filter:drop-shadow(0 6px 10px rgba(31,61,92,.25));
+    animation:derivar 8s ease-in-out infinite;
+  }
+
+  .corazon-grande svg{ width:100%; height:100%; display:block; }
+
+  .corazon-grande.a{ top:6%; left:9%; width:34px; height:34px; animation-delay:.3s; }
+  .corazon-grande.b{ top:14%; right:11%; width:24px; height:24px; animation-delay:1.6s; }
+  .corazon-grande.c{ bottom:16%; right:7%; width:30px; height:30px; animation-delay:.9s; }
+  .corazon-grande.d{ bottom:10%; left:6%; width:20px; height:20px; animation-delay:2.4s; }
+
+  /* Filigrana decorativa dorada, usada como divisor elegante */
+  .filigrana{
+    width:150px;
+    height:16px;
+    color:var(--p-dorado);
+    opacity:.85;
+    margin:0 auto .5rem;
+    display:block;
+  }
+
   .portada-scroll{
     position:relative;
     z-index:2;
@@ -247,13 +312,6 @@
     20%,80%{ transform:translateX(4px); }
     30%,50%,70%{ transform:translateX(-8px); }
     40%,60%{ transform:translateX(8px); }
-  }
-
-  .clave-tarjeta-adorno{
-    font-size:1.1rem;
-    color:var(--p-dorado);
-    margin-bottom:.3rem;
-    letter-spacing:.3em;
   }
 
   .clave-tarjeta-titulo{
@@ -375,8 +433,8 @@
      ============================================================ */
   #pantalla-sobre{
     background:
-      radial-gradient(ellipse at 50% 15%, rgba(203,161,90,.10), transparent 55%),
-      linear-gradient(160deg, var(--negro-profundo) 0%, var(--vino-oscuro) 60%, var(--negro-profundo) 100%);
+      radial-gradient(ellipse at 50% 15%, rgba(201,162,77,.12), transparent 55%),
+      linear-gradient(165deg, var(--p-cielo) 0%, var(--p-crema) 45%, var(--p-azul-suave) 100%);
     flex-direction:column;
     gap:2.2rem;
     text-align:center;
@@ -385,9 +443,9 @@
 
   .sobre-texto{
     font-size:clamp(1.1rem, 4vw, 1.5rem);
-    color:var(--crema-suave);
+    color:var(--p-marino);
     font-style:italic;
-    opacity:.92;
+    opacity:.85;
     letter-spacing:.03em;
   }
 
@@ -415,9 +473,9 @@
   .sobre-cuerpo{
     position:absolute;
     inset:0;
-    background:linear-gradient(155deg, var(--crema) 0%, var(--crema-suave) 100%);
+    background:linear-gradient(155deg, #ffffff 0%, var(--p-azul-suave) 100%);
     border-radius:8px;
-    box-shadow:0 25px 45px rgba(0,0,0,.55);
+    box-shadow:0 25px 45px rgba(31,61,92,.35);
     overflow:hidden;
   }
 
@@ -447,9 +505,9 @@
     right:9%;
     top:8%;
     height:84%;
-    background:linear-gradient(180deg, #fffaf0, var(--crema));
+    background:linear-gradient(180deg, #ffffff, var(--p-crema));
     border-radius:3px;
-    box-shadow:0 6px 16px rgba(0,0,0,.25);
+    box-shadow:0 6px 16px rgba(31,61,92,.2);
     z-index:2;
     transition:transform 1.1s cubic-bezier(.6,-0.28,.44,1.35), opacity .4s ease;
   }
@@ -461,11 +519,11 @@
     left:10%;
     right:10%;
     height:2px;
-    background:rgba(74,18,36,.15);
+    background:rgba(31,61,92,.14);
     box-shadow:
-      0 12px 0 rgba(74,18,36,.12),
-      0 24px 0 rgba(74,18,36,.12),
-      0 36px 0 rgba(74,18,36,.08);
+      0 12px 0 rgba(31,61,92,.11),
+      0 24px 0 rgba(31,61,92,.11),
+      0 36px 0 rgba(31,61,92,.08);
   }
 
   .sobre-solapa{
@@ -474,12 +532,12 @@
     left:0;
     width:100%;
     height:56%;
-    background:linear-gradient(160deg, var(--vino-suave), var(--vino));
+    background:linear-gradient(160deg, var(--p-azul), var(--p-azul-medio));
     clip-path:polygon(0 0, 100% 0, 50% 100%);
     transform-origin:top center;
     transition:transform 1s cubic-bezier(.6,.05,.4,1);
     z-index:3;
-    box-shadow:0 6px 14px rgba(0,0,0,.3);
+    box-shadow:0 6px 14px rgba(31,61,92,.25);
   }
 
   .sello-cera{
@@ -488,15 +546,15 @@
     left:50%;
     width:34px;
     height:34px;
-    background:radial-gradient(circle at 35% 30%, var(--dorado-claro), var(--dorado-opaco) 70%);
+    background:radial-gradient(circle at 35% 30%, var(--p-azul), var(--p-azul-oscuro) 70%);
     border-radius:50%;
     transform:translate(-50%,-50%);
     display:flex;
     align-items:center;
     justify-content:center;
     font-size:15px;
-    color:var(--vino-oscuro);
-    box-shadow:0 3px 8px rgba(0,0,0,.4);
+    color:#ffffff;
+    box-shadow:0 3px 8px rgba(31,61,92,.4);
     z-index:4;
     transition:opacity .3s ease;
   }
@@ -521,8 +579,8 @@
     overflow-y:auto;
     -webkit-overflow-scrolling:touch;
     background:
-      radial-gradient(ellipse at 50% 0%, rgba(203,161,90,.08), transparent 50%),
-      linear-gradient(180deg, var(--negro-profundo), var(--vino-oscuro) 12%, var(--vino-oscuro) 88%, var(--negro-profundo));
+      radial-gradient(ellipse at 50% 0%, rgba(201,162,77,.12), transparent 50%),
+      linear-gradient(180deg, var(--p-cielo), var(--p-crema) 40%, var(--p-azul-suave) 100%);
   }
 
   .carta-papel{
@@ -538,7 +596,7 @@
 
   .carta-encabezado .adorno{
     font-size:1.6rem;
-    color:var(--dorado);
+    color:var(--p-dorado);
     margin-bottom:.6rem;
     opacity:.85;
   }
@@ -547,7 +605,7 @@
     font-family:'Great Vibes', cursive;
     font-size:clamp(1.7rem, 5.4vw, 2.6rem);
     line-height:1.5;
-    color:var(--crema);
+    color:var(--p-marino);
     text-align:center;
     max-width:560px;
     margin:0 auto;
@@ -559,8 +617,8 @@
     justify-content:center;
     gap:.8rem;
     margin:3rem 0;
-    color:var(--dorado);
-    opacity:.7;
+    color:var(--p-dorado);
+    opacity:.8;
   }
 
   .divisor::before,
@@ -568,7 +626,7 @@
     content:"";
     height:1px;
     width:60px;
-    background:linear-gradient(90deg, transparent, var(--dorado), transparent);
+    background:linear-gradient(90deg, transparent, var(--p-dorado), transparent);
   }
 
   .bloque{
@@ -600,39 +658,39 @@
 
   /* Bloque: mensaje de amor */
   .bloque-amor{
-    background:linear-gradient(155deg, rgba(203,161,90,.14), rgba(74,18,36,.35));
-    border:1px solid rgba(203,161,90,.25);
+    background:linear-gradient(155deg, rgba(201,162,77,.16), rgba(157,192,230,.32));
+    border:1px solid rgba(201,162,77,.35);
   }
-  .bloque-amor .bloque-titulo{ color:var(--dorado-claro); }
-  .bloque-amor .bloque-texto{ color:var(--crema-suave); }
-  .bloque-amor .bloque-icono path{ fill:var(--dorado-claro); }
+  .bloque-amor .bloque-titulo{ color:var(--p-azul-oscuro); }
+  .bloque-amor .bloque-texto{ color:var(--p-texto); }
+  .bloque-amor .bloque-icono path{ fill:var(--p-dorado); }
 
-  /* Bloque: mensaje difícil / triste — tono más oscuro e íntimo */
+  /* Bloque: mensaje difícil / triste — tono más profundo e íntimo */
   .bloque-triste{
-    background:linear-gradient(155deg, rgba(12,6,8,.9), rgba(42,14,23,.92));
-    border:1px solid rgba(203,161,90,.12);
+    background:linear-gradient(155deg, rgba(31,61,92,.16), rgba(102,153,204,.24));
+    border:1px solid rgba(31,61,92,.2);
   }
-  .bloque-triste .bloque-titulo{ color:rgba(230,201,138,.8); }
-  .bloque-triste .bloque-texto{ color:rgba(247,236,217,.78); }
+  .bloque-triste .bloque-titulo{ color:var(--p-marino); }
+  .bloque-triste .bloque-texto{ color:rgba(31,61,92,.82); }
   .bloque-triste .bloque-icono path,
-  .bloque-triste .bloque-icono line{ stroke:rgba(230,201,138,.55); }
+  .bloque-triste .bloque-icono line{ stroke:var(--p-azul-oscuro); }
 
   /* Bloque: reconciliación — cálido y esperanzador */
   .bloque-reconciliacion{
-    background:linear-gradient(155deg, rgba(203,161,90,.22), rgba(110,27,52,.4));
-    border:1px solid rgba(230,201,138,.35);
+    background:linear-gradient(155deg, rgba(201,162,77,.26), rgba(157,192,230,.4));
+    border:1px solid rgba(201,162,77,.45);
   }
-  .bloque-reconciliacion .bloque-titulo{ color:var(--dorado-claro); }
-  .bloque-reconciliacion .bloque-texto{ color:var(--crema); }
-  .bloque-reconciliacion .bloque-icono{ color:var(--dorado-claro); }
-  .bloque-reconciliacion .bloque-icono path{ fill:var(--dorado-claro); }
+  .bloque-reconciliacion .bloque-titulo{ color:var(--p-azul-oscuro); }
+  .bloque-reconciliacion .bloque-texto{ color:var(--p-texto); }
+  .bloque-reconciliacion .bloque-icono{ color:var(--p-dorado); }
+  .bloque-reconciliacion .bloque-icono path{ fill:var(--p-dorado); }
 
   /* Galería de fotos */
   .galeria-titulo{
     font-family:'Dancing Script', cursive;
     font-size:clamp(1.5rem, 4.5vw, 1.9rem);
     font-weight:700;
-    color:var(--dorado-claro);
+    color:var(--p-azul-oscuro);
     text-align:center;
     margin:0 0 1.6rem;
   }
@@ -653,16 +711,16 @@
     aspect-ratio:1/1;
     border-radius:12px;
     overflow:hidden;
-    border:3px solid rgba(203,161,90,.35);
-    box-shadow:0 10px 24px rgba(0,0,0,.4);
+    border:3px solid rgba(201,162,77,.4);
+    box-shadow:0 10px 24px rgba(31,61,92,.25);
     transition:transform .35s ease, box-shadow .35s ease, border-color .35s ease;
   }
 
   .foto-marco:hover,
   .foto-marco:active{
     transform:scale(1.045) translateY(-3px);
-    box-shadow:0 16px 34px rgba(0,0,0,.55);
-    border-color:var(--dorado-claro);
+    box-shadow:0 16px 34px rgba(31,61,92,.35);
+    border-color:var(--p-dorado);
   }
 
   .foto-marco img{
@@ -676,7 +734,7 @@
     font-family:'Lora', serif;
     font-style:italic;
     font-size:.92rem;
-    color:rgba(247,236,217,.65);
+    color:rgba(31,61,92,.55);
     margin:0 0 1rem;
   }
 
@@ -688,20 +746,20 @@
   .carta-cierre p{
     font-family:'Great Vibes', cursive;
     font-size:clamp(2rem, 7vw, 3rem);
-    color:var(--dorado-claro);
+    color:var(--p-azul-oscuro);
     margin:0;
   }
 
   .carta-cierre .firma-corazon{
     margin-top:.6rem;
     font-size:1.1rem;
-    color:var(--dorado);
-    opacity:.8;
+    color:var(--p-dorado);
+    opacity:.9;
   }
 
   /* Scrollbar discreto para la carta */
   #pantalla-carta::-webkit-scrollbar{ width:8px; }
-  #pantalla-carta::-webkit-scrollbar-thumb{ background:rgba(203,161,90,.35); border-radius:8px; }
+  #pantalla-carta::-webkit-scrollbar-thumb{ background:rgba(31,61,92,.25); border-radius:8px; }
   #pantalla-carta::-webkit-scrollbar-track{ background:transparent; }
 
   @media (max-width:360px){
@@ -722,8 +780,27 @@
     <!-- Marco decorativo dorado -->
     <div class="portada-marco" aria-hidden="true"></div>
 
+    <!-- Listones de raso decorativos -->
+    <div class="cinta-decorativa uno" aria-hidden="true"></div>
+    <div class="cinta-decorativa dos" aria-hidden="true"></div>
+    <div class="cinta-decorativa tres" aria-hidden="true"></div>
+
     <!-- Corazones flotantes de fondo, generados por JS -->
-    <div class="portada-fondo" id="portada-fondo" aria-hidden="true"></div>
+    <div class="portada-fondo" id="portada-fondo" aria-hidden="true">
+      <!-- Corazones grandes fijos, acentos decorativos -->
+      <span class="corazon-grande a" aria-hidden="true">
+        <svg viewBox="0 0 32 32"><path fill="#ffffff" stroke="#6699cc" stroke-width="1.6" d="M16 27.5C9 22 4 17.6 4 12.4 4 8.5 7.1 5.4 11 5.4c1.9 0 3.8 1 5 2.6 1.2-1.6 3.1-2.6 5-2.6 3.9 0 7 3.1 7 7 0 5.2-5 9.6-12 15.1z"/></svg>
+      </span>
+      <span class="corazon-grande b" aria-hidden="true">
+        <svg viewBox="0 0 32 32"><path fill="#c9a24d" d="M16 28C7 21 2 16.2 2 10.8 2 6.6 5.4 3.4 9.5 3.4c2.5 0 4.9 1.3 6.5 3.4 1.6-2.1 4-3.4 6.5-3.4 4.1 0 7.5 3.2 7.5 7.4C30 16.2 25 21 16 28z"/></svg>
+      </span>
+      <span class="corazon-grande c" aria-hidden="true">
+        <svg viewBox="0 0 32 32"><path fill="#6699cc" d="M16 28C7 21 2 16.2 2 10.8 2 6.6 5.4 3.4 9.5 3.4c2.5 0 4.9 1.3 6.5 3.4 1.6-2.1 4-3.4 6.5-3.4 4.1 0 7.5 3.2 7.5 7.4C30 16.2 25 21 16 28z"/></svg>
+      </span>
+      <span class="corazon-grande d" aria-hidden="true">
+        <svg viewBox="0 0 32 32"><path fill="#ffffff" stroke="#c9a24d" stroke-width="1.6" d="M16 27.5C9 22 4 17.6 4 12.4 4 8.5 7.1 5.4 11 5.4c1.9 0 3.8 1 5 2.6 1.2-1.6 3.1-2.6 5-2.6 3.9 0 7 3.1 7 7 0 5.2-5 9.6-12 15.1z"/></svg>
+      </span>
+    </div>
 
     <div class="portada-scroll">
       <div class="portada-contenido">
@@ -735,10 +812,19 @@
         </div>
 
         <div>
+          <svg class="filigrana" viewBox="0 0 200 20" fill="none" stroke="currentColor" aria-hidden="true">
+            <path d="M2 10c14-9 28-9 38 0s24 9 38 0" stroke-width="1.3" stroke-linecap="round"/>
+            <path d="M198 10c-14-9-28-9-38 0s-24 9-38 0" stroke-width="1.3" stroke-linecap="round"/>
+            <rect x="96" y="6" width="8" height="8" transform="rotate(45 100 10)" fill="currentColor" stroke="none"/>
+          </svg>
           <p class="portada-titulo">Este mensaje es solo para ti</p>
 
           <div class="clave-tarjeta" id="clave-tarjeta">
-            <div class="clave-tarjeta-adorno">✦</div>
+            <svg class="filigrana" viewBox="0 0 200 20" fill="none" stroke="currentColor" aria-hidden="true">
+              <path d="M2 10c14-9 28-9 38 0s24 9 38 0" stroke-width="1.3" stroke-linecap="round"/>
+              <path d="M198 10c-14-9-28-9-38 0s-24 9-38 0" stroke-width="1.3" stroke-linecap="round"/>
+              <rect x="96" y="6" width="8" height="8" transform="rotate(45 100 10)" fill="currentColor" stroke="none"/>
+            </svg>
             <h1 class="clave-tarjeta-titulo">Para entrar</h1>
             <p class="clave-tarjeta-sub">Introduce la contraseña que solo tú y yo sabemos</p>
 
@@ -870,27 +956,27 @@
       <div class="galeria-grid">
         <div class="foto-marco">
           <!-- FOTO 1 - REEMPLAZAR BASE64 AQUÍ -->
-          <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyMDAgMjAwIj48ZGVmcz48bGluZWFyR3JhZGllbnQgaWQ9ImciIHgxPSIwIiB5MT0iMCIgeDI9IjEiIHkyPSIxIj48c3RvcCBvZmZzZXQ9IjAiIHN0b3AtY29sb3I9IiM0YTEyMjQiLz48c3RvcCBvZmZzZXQ9IjEiIHN0b3AtY29sb3I9IiMyYTBlMTciLz48L2xpbmVhckdyYWRpZW50PjwvZGVmcz48cmVjdCB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgZmlsbD0idXJsKCNnKSIvPjx0ZXh0IHg9IjUwJSIgeT0iNTIlIiBmb250LXNpemU9IjQ0IiBmaWxsPSIjZTZjOThhIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LWZhbWlseT0ic2VyaWYiPuKZpTwvdGV4dD48L3N2Zz4=" alt="Foto 1">
+          <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyMDAgMjAwIj48ZGVmcz48bGluZWFyR3JhZGllbnQgaWQ9ImciIHgxPSIwIiB5MT0iMCIgeDI9IjEiIHkyPSIxIj48c3RvcCBvZmZzZXQ9IjAiIHN0b3AtY29sb3I9IiMzYTYyOGYiLz48c3RvcCBvZmZzZXQ9IjEiIHN0b3AtY29sb3I9IiMxZjNkNWMiLz48L2xpbmVhckdyYWRpZW50PjwvZGVmcz48cmVjdCB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgZmlsbD0idXJsKCNnKSIvPjx0ZXh0IHg9IjUwJSIgeT0iNTIlIiBmb250LXNpemU9IjQ0IiBmaWxsPSIjZjdlY2Q5IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LWZhbWlseT0ic2VyaWYiPiYjOTgyOTs8L3RleHQ+PC9zdmc+" alt="Foto 1">
         </div>
         <div class="foto-marco">
           <!-- FOTO 2 - REEMPLAZAR BASE64 AQUÍ -->
-          <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyMDAgMjAwIj48ZGVmcz48bGluZWFyR3JhZGllbnQgaWQ9ImciIHgxPSIwIiB5MT0iMCIgeDI9IjEiIHkyPSIxIj48c3RvcCBvZmZzZXQ9IjAiIHN0b3AtY29sb3I9IiM2ZTFiMzQiLz48c3RvcCBvZmZzZXQ9IjEiIHN0b3AtY29sb3I9IiMwYzA2MDgiLz48L2xpbmVhckdyYWRpZW50PjwvZGVmcz48cmVjdCB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgZmlsbD0idXJsKCNnKSIvPjx0ZXh0IHg9IjUwJSIgeT0iNTIlIiBmb250LXNpemU9IjQ0IiBmaWxsPSIjZTZjOThhIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LWZhbWlseT0ic2VyaWYiPuKZpTwvdGV4dD48L3N2Zz4=" alt="Foto 2">
+          <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyMDAgMjAwIj48ZGVmcz48bGluZWFyR3JhZGllbnQgaWQ9ImciIHgxPSIwIiB5MT0iMCIgeDI9IjEiIHkyPSIxIj48c3RvcCBvZmZzZXQ9IjAiIHN0b3AtY29sb3I9IiM2Njk5Y2MiLz48c3RvcCBvZmZzZXQ9IjEiIHN0b3AtY29sb3I9IiMyYTRhNmUiLz48L2xpbmVhckdyYWRpZW50PjwvZGVmcz48cmVjdCB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgZmlsbD0idXJsKCNnKSIvPjx0ZXh0IHg9IjUwJSIgeT0iNTIlIiBmb250LXNpemU9IjQ0IiBmaWxsPSIjZjdlY2Q5IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LWZhbWlseT0ic2VyaWYiPiYjOTgyOTs8L3RleHQ+PC9zdmc+" alt="Foto 2">
         </div>
         <div class="foto-marco">
           <!-- FOTO 3 - REEMPLAZAR BASE64 AQUÍ -->
-          <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyMDAgMjAwIj48ZGVmcz48bGluZWFyR3JhZGllbnQgaWQ9ImciIHgxPSIwIiB5MT0iMCIgeDI9IjEiIHkyPSIxIj48c3RvcCBvZmZzZXQ9IjAiIHN0b3AtY29sb3I9IiNhOTgzNGEiLz48c3RvcCBvZmZzZXQ9IjEiIHN0b3AtY29sb3I9IiM0YTEyMjQiLz48L2xpbmVhckdyYWRpZW50PjwvZGVmcz48cmVjdCB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgZmlsbD0idXJsKCNnKSIvPjx0ZXh0IHg9IjUwJSIgeT0iNTIlIiBmb250LXNpemU9IjQ0IiBmaWxsPSIjZjdlY2Q5IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LWZhbWlseT0ic2VyaWYiPuKZpTwvdGV4dD48L3N2Zz4=" alt="Foto 3">
+          <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyMDAgMjAwIj48ZGVmcz48bGluZWFyR3JhZGllbnQgaWQ9ImciIHgxPSIwIiB5MT0iMCIgeDI9IjEiIHkyPSIxIj48c3RvcCBvZmZzZXQ9IjAiIHN0b3AtY29sb3I9IiNjOWEyNGQiLz48c3RvcCBvZmZzZXQ9IjEiIHN0b3AtY29sb3I9IiMzYTYyOGYiLz48L2xpbmVhckdyYWRpZW50PjwvZGVmcz48cmVjdCB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgZmlsbD0idXJsKCNnKSIvPjx0ZXh0IHg9IjUwJSIgeT0iNTIlIiBmb250LXNpemU9IjQ0IiBmaWxsPSIjZjdlY2Q5IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LWZhbWlseT0ic2VyaWYiPiYjOTgyOTs8L3RleHQ+PC9zdmc+" alt="Foto 3">
         </div>
         <div class="foto-marco">
           <!-- FOTO 4 - REEMPLAZAR BASE64 AQUÍ -->
-          <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyMDAgMjAwIj48ZGVmcz48bGluZWFyR3JhZGllbnQgaWQ9ImciIHgxPSIwIiB5MT0iMCIgeDI9IjEiIHkyPSIxIj48c3RvcCBvZmZzZXQ9IjAiIHN0b3AtY29sb3I9IiMyYTBlMTciLz48c3RvcCBvZmZzZXQ9IjEiIHN0b3AtY29sb3I9IiM2ZTFiMzQiLz48L2xpbmVhckdyYWRpZW50PjwvZGVmcz48cmVjdCB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgZmlsbD0idXJsKCNnKSIvPjx0ZXh0IHg9IjUwJSIgeT0iNTIlIiBmb250LXNpemU9IjQ0IiBmaWxsPSIjZTZjOThhIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LWZhbWlseT0ic2VyaWYiPuKZpTwvdGV4dD48L3N2Zz4=" alt="Foto 4">
+          <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyMDAgMjAwIj48ZGVmcz48bGluZWFyR3JhZGllbnQgaWQ9ImciIHgxPSIwIiB5MT0iMCIgeDI9IjEiIHkyPSIxIj48c3RvcCBvZmZzZXQ9IjAiIHN0b3AtY29sb3I9IiMxZjNkNWMiLz48c3RvcCBvZmZzZXQ9IjEiIHN0b3AtY29sb3I9IiM2Njk5Y2MiLz48L2xpbmVhckdyYWRpZW50PjwvZGVmcz48cmVjdCB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgZmlsbD0idXJsKCNnKSIvPjx0ZXh0IHg9IjUwJSIgeT0iNTIlIiBmb250LXNpemU9IjQ0IiBmaWxsPSIjZjdlY2Q5IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LWZhbWlseT0ic2VyaWYiPiYjOTgyOTs8L3RleHQ+PC9zdmc+" alt="Foto 4">
         </div>
         <div class="foto-marco">
           <!-- FOTO 5 - REEMPLAZAR BASE64 AQUÍ -->
-          <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyMDAgMjAwIj48ZGVmcz48bGluZWFyR3JhZGllbnQgaWQ9ImciIHgxPSIwIiB5MT0iMCIgeDI9IjEiIHkyPSIxIj48c3RvcCBvZmZzZXQ9IjAiIHN0b3AtY29sb3I9IiM0YTEyMjQiLz48c3RvcCBvZmZzZXQ9IjEiIHN0b3AtY29sb3I9IiNhOTgzNGEiLz48L2xpbmVhckdyYWRpZW50PjwvZGVmcz48cmVjdCB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgZmlsbD0idXJsKCNnKSIvPjx0ZXh0IHg9IjUwJSIgeT0iNTIlIiBmb250LXNpemU9IjQ0IiBmaWxsPSIjZjdlY2Q5IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LWZhbWlseT0ic2VyaWYiPuKZpTwvdGV4dD48L3N2Zz4=" alt="Foto 5">
+          <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyMDAgMjAwIj48ZGVmcz48bGluZWFyR3JhZGllbnQgaWQ9ImciIHgxPSIwIiB5MT0iMCIgeDI9IjEiIHkyPSIxIj48c3RvcCBvZmZzZXQ9IjAiIHN0b3AtY29sb3I9IiMzYTYyOGYiLz48c3RvcCBvZmZzZXQ9IjEiIHN0b3AtY29sb3I9IiM5ZGMwZTYiLz48L2xpbmVhckdyYWRpZW50PjwvZGVmcz48cmVjdCB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgZmlsbD0idXJsKCNnKSIvPjx0ZXh0IHg9IjUwJSIgeT0iNTIlIiBmb250LXNpemU9IjQ0IiBmaWxsPSIjZjdlY2Q5IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LWZhbWlseT0ic2VyaWYiPiYjOTgyOTs8L3RleHQ+PC9zdmc+" alt="Foto 5">
         </div>
         <div class="foto-marco">
           <!-- FOTO 6 - REEMPLAZAR BASE64 AQUÍ -->
-          <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyMDAgMjAwIj48ZGVmcz48bGluZWFyR3JhZGllbnQgaWQ9ImciIHgxPSIwIiB5MT0iMCIgeDI9IjEiIHkyPSIxIj48c3RvcCBvZmZzZXQ9IjAiIHN0b3AtY29sb3I9IiMwYzA2MDgiLz48c3RvcCBvZmZzZXQ9IjEiIHN0b3AtY29sb3I9IiM2ZTFiMzQiLz48L2xpbmVhckdyYWRpZW50PjwvZGVmcz48cmVjdCB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgZmlsbD0idXJsKCNnKSIvPjx0ZXh0IHg9IjUwJSIgeT0iNTIlIiBmb250LXNpemU9IjQ0IiBmaWxsPSIjZTZjOThhIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LWZhbWlseT0ic2VyaWYiPuKZpTwvdGV4dD48L3N2Zz4=" alt="Foto 6">
+          <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyMDAgMjAwIj48ZGVmcz48bGluZWFyR3JhZGllbnQgaWQ9ImciIHgxPSIwIiB5MT0iMCIgeDI9IjEiIHkyPSIxIj48c3RvcCBvZmZzZXQ9IjAiIHN0b3AtY29sb3I9IiMyYTRhNmUiLz48c3RvcCBvZmZzZXQ9IjEiIHN0b3AtY29sb3I9IiM2Njk5Y2MiLz48L2xpbmVhckdyYWRpZW50PjwvZGVmcz48cmVjdCB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgZmlsbD0idXJsKCNnKSIvPjx0ZXh0IHg9IjUwJSIgeT0iNTIlIiBmb250LXNpemU9IjQ0IiBmaWxsPSIjZjdlY2Q5IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LWZhbWlseT0ic2VyaWYiPiYjOTgyOTs8L3RleHQ+PC9zdmc+" alt="Foto 6">
         </div>
       </div>
       <p class="posdata">Posdata: no tenemos muchas fotos de grandes juntos, pero tenemos nuestros mejores recuerdos.</p>
