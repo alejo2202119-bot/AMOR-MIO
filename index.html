@@ -965,6 +965,156 @@
   .musica-boton .icono-pausa{ display:none; }
   .musica-boton.reproduciendo .icono-play{ display:none; }
   .musica-boton.reproduciendo .icono-pausa{ display:block; }
+
+  /* ============================================================
+     BOTÓN Y MODAL DE MENSAJES DIARIOS
+     ============================================================ */
+  .dia-boton{
+    position:fixed;
+    left:14px;
+    bottom:14px;
+    display:flex;
+    align-items:center;
+    gap:.5rem;
+    padding:.6rem .9rem .6rem .65rem;
+    border-radius:999px;
+    background:linear-gradient(150deg, rgba(201,162,77,.92), rgba(169,131,74,.92));
+    -webkit-backdrop-filter:blur(6px);
+    backdrop-filter:blur(6px);
+    border:1px solid rgba(255,255,255,.4);
+    color:#ffffff;
+    cursor:pointer;
+    z-index:50;
+    box-shadow:0 8px 20px rgba(31,61,92,.3);
+    opacity:0;
+    transform:translateY(8px) scale(.9);
+    pointer-events:none;
+    transition:opacity .6s ease, transform .6s ease;
+    font-family:'Lora', serif;
+  }
+
+  #pantalla-carta.activa .dia-boton{
+    opacity:1;
+    transform:translateY(0) scale(1);
+    pointer-events:auto;
+  }
+
+  .dia-boton svg{
+    width:18px;
+    height:18px;
+    flex-shrink:0;
+  }
+
+  .dia-boton-texto{
+    font-size:.78rem;
+    font-style:italic;
+    white-space:nowrap;
+  }
+
+  @media (max-width:400px){
+    .dia-boton-texto{ display:none; }
+    .dia-boton{ padding:.65rem; border-radius:50%; }
+  }
+
+  .dia-modal{
+    position:fixed;
+    inset:0;
+    z-index:70;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:1.4rem;
+    background:rgba(20,35,54,.55);
+    -webkit-backdrop-filter:blur(3px);
+    backdrop-filter:blur(3px);
+    opacity:0;
+    visibility:hidden;
+    pointer-events:none;
+    transition:opacity .35s ease;
+  }
+
+  .dia-modal.abierto{
+    opacity:1;
+    visibility:visible;
+    pointer-events:auto;
+  }
+
+  .dia-tarjeta{
+    position:relative;
+    width:100%;
+    max-width:400px;
+    max-height:85vh;
+    overflow-y:auto;
+    background:linear-gradient(165deg, #ffffff, var(--p-crema));
+    border:1px solid rgba(201,162,77,.5);
+    border-radius:24px;
+    padding:2.1rem 1.7rem 1.8rem;
+    text-align:center;
+    box-shadow:0 30px 60px rgba(20,35,54,.45);
+    transform:scale(.92) translateY(10px);
+    transition:transform .35s ease;
+  }
+
+  .dia-modal.abierto .dia-tarjeta{
+    transform:scale(1) translateY(0);
+  }
+
+  .dia-cerrar{
+    position:absolute;
+    top:12px;
+    right:12px;
+    width:30px;
+    height:30px;
+    border-radius:50%;
+    border:none;
+    background:rgba(31,61,92,.08);
+    color:var(--p-azul-oscuro);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    cursor:pointer;
+    font-size:1.1rem;
+    line-height:1;
+  }
+
+  .dia-icono-corazon{
+    width:34px;
+    height:34px;
+    margin:0 auto .7rem;
+    color:var(--p-dorado);
+  }
+
+  .dia-etiqueta{
+    font-family:'Dancing Script', cursive;
+    font-weight:700;
+    font-size:1.4rem;
+    color:var(--p-azul-oscuro);
+    margin:0 0 .2rem;
+  }
+
+  .dia-fecha{
+    font-family:'Lora', serif;
+    font-style:italic;
+    font-size:.82rem;
+    color:rgba(31,61,92,.55);
+    margin:0 0 1.3rem;
+  }
+
+  .dia-texto{
+    font-family:'Playfair Display', serif;
+    font-style:italic;
+    font-size:1.14rem;
+    line-height:1.7;
+    color:var(--p-texto);
+    margin:0 0 1.4rem;
+  }
+
+  .dia-firma{
+    font-family:'Great Vibes', cursive;
+    font-size:1.6rem;
+    color:var(--p-dorado);
+    margin:0;
+  }
 </style>
 </head>
 <body>
@@ -1229,6 +1379,26 @@
       </div>
 
     </div>
+
+    <!-- Botón de mensajes diarios -->
+    <button type="button" class="dia-boton" id="dia-boton" aria-haspopup="dialog" aria-controls="dia-modal">
+      <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 21s-7.5-4.5-10-9.3C.3 8 2 4.5 5.6 4.1c2-.2 3.7.8 4.9 2.4 1.2-1.6 2.9-2.6 4.9-2.4C19 4.5 20.7 8 19 11.7 16.5 16.5 12 21 12 21z"/></svg>
+      <span class="dia-boton-texto">Mensajes diarios para ti, mi amor</span>
+    </button>
+
+    <!-- Modal del mensaje del día -->
+    <div class="dia-modal" id="dia-modal" role="dialog" aria-modal="true" aria-label="Mensaje del día">
+      <div class="dia-tarjeta">
+        <button type="button" class="dia-cerrar" id="dia-cerrar" aria-label="Cerrar">✕</button>
+        <svg class="dia-icono-corazon" viewBox="0 0 32 32" aria-hidden="true">
+          <path fill="currentColor" d="M16 28C7 21 2 16.2 2 10.8 2 6.6 5.4 3.4 9.5 3.4c2.5 0 4.9 1.3 6.5 3.4 1.6-2.1 4-3.4 6.5-3.4 4.1 0 7.5 3.2 7.5 7.4C30 16.2 25 21 16 28z"/>
+        </svg>
+        <p class="dia-etiqueta">Mensaje de hoy</p>
+        <p class="dia-fecha" id="dia-fecha"></p>
+        <p class="dia-texto" id="dia-texto"></p>
+        <p class="dia-firma">Te amo</p>
+      </div>
+    </div>
   </section>
 
   <!-- Botón de música de fondo -->
@@ -1402,6 +1572,131 @@
         musicaFondo.pause();
         musicaBoton.classList.remove('reproduciendo');
       }
+    });
+  }
+
+  /* ---------- Mensaje del día ---------- */
+  // Banco de frases: se elige una distinta cada día según la fecha real,
+  // así que no se repiten seguidas y no hace falta tocar nada nunca.
+  var mensajesDelDia = [
+    "Hoy, como todos los días, mi primer pensamiento fue para ti.",
+    "Eres la razón por la que sonrío revisando el teléfono sin ningún motivo aparente.",
+    "No importa cuántos días pasen, contigo todo se siente como el primero.",
+    "Si pudiera enviarte un abrazo a través de la pantalla, hoy sería uno bien largo.",
+    "Pienso en ti más de lo que te imaginas.",
+    "Eres de esas personas que uno encuentra una sola vez en la vida. Y yo te encontré a ti.",
+    "Hoy quiero recordarte que eres mi lugar favorito del mundo.",
+    "Gracias por existir, por ser tú, y por dejarme quererte como te quiero.",
+    "Eres mi calma en los días difíciles y mi alegría en los días buenos.",
+    "No hay distancia que le gane a las ganas que tengo de verte.",
+    "Hoy se me ocurrió pensar en ti. Como ayer. Como mañana.",
+    "Contigo hasta los días grises se sienten con más color.",
+    "Eres el mensaje que quiero leer al despertar y el último antes de dormir.",
+    "Te elijo hoy, como te elegí ayer, y como te voy a elegir mañana.",
+    "Eres mi persona favorita, sin competencia.",
+    "Cada mensaje tuyo me alegra el día entero, aunque sea uno solo.",
+    "Espero que sepas lo mucho que significas para mí, incluso en los días en que no te lo digo.",
+    "Hoy solo quería recordarte que sigo aquí, pensando en ti, esperándote.",
+    "Contigo aprendí que el amor también se construye a la distancia.",
+    "Eres la persona con la que quiero compartir hasta las cosas más simples del día.",
+    "Ojalá pudiera darte los buenos días con un beso en vez de con un mensaje.",
+    "Cuando algo bueno me pasa, lo primero que pienso es en contártelo a ti.",
+    "Extrañarte se volvió parte de mi rutina, pero también amarte lo es.",
+    "Eres mi motivo favorito para sonreír sin razón aparente.",
+    "Hoy quiero que sepas que, pase lo que pase, cuentas conmigo.",
+    "Contigo entendí que hay amores que valen la pena esperar.",
+    "Me encanta imaginar el día en que ya no tengamos que despedirnos.",
+    "Eres la mejor parte de mis días, incluso de los que no te veo.",
+    "No hay un solo día en el que no agradezca haberte conocido.",
+    "Hoy simplemente quiero decirte que te amo, sin ningún motivo especial. Solo porque sí.",
+    "Contigo hasta el silencio se siente cómodo.",
+    "Eres la razón por la que sigo creyendo en las segundas oportunidades.",
+    "Ojalá supieras cuánto significa para mí cada 'buenos días' tuyo.",
+    "Te prometo que voy a seguir eligiéndote, todos los días, sin cansarme.",
+    "Hoy pensé en todas las cosas que quiero vivir contigo todavía.",
+    "Eres mi persona favorita para contarle hasta lo que no tiene importancia.",
+    "Contigo aprendí que querer bien también es saber esperar.",
+    "Espero el día en que podamos construir juntos todo lo que hemos hablado.",
+    "Hoy quiero recordarte lo orgulloso que estoy de la mujer en la que te has convertido.",
+    "Eres mi razón para creer que las cosas buenas sí llegan, incluso después de las tormentas.",
+    "No sé cómo será el futuro, pero sé que quiero que tú estés en él.",
+    "Contigo, hasta los planes más sencillos se sienten como aventuras.",
+    "Hoy me acordé de tu risa y se me dibujó una sonrisa sola.",
+    "Eres mi lugar seguro, aunque estemos lejos.",
+    "Gracias por seguir aquí, a pesar de todo, a pesar de mí.",
+    "Hoy quiero que sepas que te pienso en cada pequeño detalle de mi día.",
+    "Contigo el 'para siempre' no me da miedo, me da ganas.",
+    "Eres mi persona favorita para imaginar el futuro.",
+    "Hoy simplemente quería recordarte cuánto te quiero, aunque ya lo sepas.",
+    "Eres la prueba de que a veces las segundas oportunidades sí valen la pena.",
+    "Contigo aprendí que el amor de verdad también perdona y se reconstruye.",
+    "Hoy quiero agradecerte por seguir creyendo en nosotros.",
+    "Eres el motivo por el que quiero ser mejor cada día.",
+    "No hay 'buenos días' que no empiece pensando en ti.",
+    "Contigo hasta las cosas difíciles se sienten más livianas.",
+    "Hoy quiero recordarte que mi cariño por ti no tiene fecha de vencimiento.",
+    "Eres mi persona favorita para compartir silencios, risas y todo lo demás.",
+    "Ojalá el tiempo pase rápido hasta el día en que podamos estar juntos otra vez.",
+    "Hoy pensé en lo afortunado que soy de tenerte, aunque sea a la distancia.",
+    "Contigo aprendí que esperar también es una forma de amar.",
+    "Eres mi razón favorita para sonreírle al teléfono como un tonto.",
+    "Hoy quiero recordarte que en mis planes futuros siempre estás tú.",
+    "Eres la persona que quiero abrazar cuando las cosas se ponen difíciles.",
+    "Contigo entendí que el amor también se demuestra con paciencia.",
+    "Hoy simplemente te mando este mensaje para que sepas que te extraño.",
+    "Eres mi persona favorita para empezar y terminar el día.",
+    "Ojalá pudieras ver lo mucho que sonrío cuando pienso en ti.",
+    "Hoy quiero recordarte que contigo todo vale la pena, incluso la espera.",
+    "Eres la razón por la que sigo teniendo fe en que todo va a estar bien.",
+    "Contigo aprendí que el amor bonito también sabe pedir perdón.",
+    "Hoy pensé en todas las ganas que tengo de volver a verte.",
+    "Eres mi persona favorita para planear el futuro, aunque parezca lejano.",
+    "Gracias por ser mi calma, mi risa y mis ganas de seguir intentándolo.",
+    "Hoy quiero recordarte que te amo, sin condiciones ni horarios.",
+    "Eres la mujer que quiero a mi lado en cada capítulo que me falta por vivir.",
+    "Contigo aprendí que el amor de verdad no se rinde fácil.",
+    "Hoy simplemente quería decirte: gracias por ser tú.",
+    "Eres mi persona favorita para soñar despierto.",
+    "Ojalá cada día te llegue este mensaje como un pequeño abrazo.",
+    "Hoy y siempre, mi corazón sigue siendo tuyo."
+  ];
+
+  function obtenerMensajeDeHoy(){
+    var hoy = new Date();
+    var diaBase = Math.floor(Date.UTC(hoy.getFullYear(), hoy.getMonth(), hoy.getDate()) / 86400000);
+    var indice = ((diaBase % mensajesDelDia.length) + mensajesDelDia.length) % mensajesDelDia.length;
+    return mensajesDelDia[indice];
+  }
+
+  function formatearFechaDeHoy(){
+    var dias = ['domingo', 'lunes', 'martes', 'miércoles', 'jueves', 'viernes', 'sábado'];
+    var meses = ['enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre'];
+    var hoy = new Date();
+    var texto = dias[hoy.getDay()] + ', ' + hoy.getDate() + ' de ' + meses[hoy.getMonth()];
+    return texto.charAt(0).toUpperCase() + texto.slice(1);
+  }
+
+  var diaBoton = document.getElementById('dia-boton');
+  var diaModal = document.getElementById('dia-modal');
+  var diaCerrar = document.getElementById('dia-cerrar');
+  var diaFechaEl = document.getElementById('dia-fecha');
+  var diaTextoEl = document.getElementById('dia-texto');
+
+  if (diaBoton && diaModal && diaCerrar && diaFechaEl && diaTextoEl){
+    diaBoton.addEventListener('click', function(){
+      diaFechaEl.textContent = formatearFechaDeHoy();
+      diaTextoEl.textContent = obtenerMensajeDeHoy();
+      diaModal.classList.add('abierto');
+      // NOTA: aquí se puede reproducir una canción propia de esta sección
+      // cuando se agregue el archivo de audio correspondiente.
+    });
+
+    diaCerrar.addEventListener('click', function(){
+      diaModal.classList.remove('abierto');
+    });
+
+    diaModal.addEventListener('click', function(e){
+      if (e.target === diaModal) diaModal.classList.remove('abierto');
     });
   }
 
