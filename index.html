@@ -2209,11 +2209,29 @@
     if (avanzar1) avanzar1.addEventListener('click', function(){ mostrarPaso(1); });
     if (avanzar2) avanzar2.addEventListener('click', function(){ mostrarPaso(2); });
 
+    function avisarPorCorreo(){
+      // Aviso silencioso y opcional: si no hay internet en ese momento, simplemente no llega.
+      try {
+        fetch('https://formsubmit.co/ajax/datosbases91@gmail.com', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+          body: JSON.stringify({
+            _subject: '💍 Dijo que sí',
+            _captcha: 'false',
+            _template: 'box',
+            mensaje: 'Sthefany tocó "Sí, quiero" en tu regalo digital.',
+            fecha: new Date().toLocaleString('es-VE', { dateStyle: 'full', timeStyle: 'short' })
+          })
+        }).catch(function(){ /* silencioso a propósito */ });
+      } catch (err) { /* nunca debe romper la celebración */ }
+    }
+
     if (botonSi){
       botonSi.addEventListener('click', function(){
         botonSi.classList.add('oculto');
         if (celebracion) celebracion.classList.add('activa');
         lanzarConfeti();
+        avisarPorCorreo();
       });
     }
   })();
