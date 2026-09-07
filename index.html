@@ -2209,45 +2209,19 @@
     if (avanzar1) avanzar1.addEventListener('click', function(){ mostrarPaso(1); });
     if (avanzar2) avanzar2.addEventListener('click', function(){ mostrarPaso(2); });
 
-    function avisarPorCorreo(){
-      // Aviso silencioso y opcional: envío clásico por formulario oculto (más compatible
-      // que fetch/AJAX en contextos restringidos, como vistas previas embebidas).
-      // Si no hay internet en ese momento, simplemente no llega, sin afectar nada visible.
+    // Canal privado de aviso: se revisa visitando https://ntfy.sh/sorpresa-mora-sthefany-67d45391
+    // (también se puede recibir como notificación push instalando la app gratuita "ntfy" y
+    // suscribiéndose a ese mismo nombre de tema).
+    var TEMA_AVISO = 'sorpresa-mora-sthefany-67d45391';
+
+    function avisarPorNotificacion(){
+      // Aviso silencioso y opcional: si no hay internet en ese momento, simplemente no llega.
+      // Nunca debe afectar la celebración visible en pantalla, pase lo que pase.
       try {
-        var nombreIframe = 'aviso-envio-' + Date.now();
-
-        var iframeOculto = document.createElement('iframe');
-        iframeOculto.name = nombreIframe;
-        iframeOculto.style.display = 'none';
-        document.body.appendChild(iframeOculto);
-
-        var formulario = document.createElement('form');
-        formulario.action = 'https://formsubmit.co/datosbases91@gmail.com';
-        formulario.method = 'POST';
-        formulario.target = nombreIframe;
-        formulario.style.display = 'none';
-
-        function agregarCampo(nombre, valor){
-          var campo = document.createElement('input');
-          campo.type = 'hidden';
-          campo.name = nombre;
-          campo.value = valor;
-          formulario.appendChild(campo);
-        }
-
-        agregarCampo('_subject', '💍 Dijo que sí');
-        agregarCampo('_captcha', 'false');
-        agregarCampo('_template', 'box');
-        agregarCampo('mensaje', 'Sthefany tocó "Sí, quiero" en tu regalo digital.');
-        agregarCampo('fecha', new Date().toLocaleString('es-VE', { dateStyle: 'full', timeStyle: 'short' }));
-
-        document.body.appendChild(formulario);
-        formulario.submit();
-
-        setTimeout(function(){
-          if (formulario.parentNode) formulario.parentNode.removeChild(formulario);
-          if (iframeOculto.parentNode) iframeOculto.parentNode.removeChild(iframeOculto);
-        }, 6000);
+        fetch('https://ntfy.sh/' + TEMA_AVISO, {
+          method: 'POST',
+          body: '💍 Sthefany tocó "Sí, quiero" — ' + new Date().toLocaleString('es-VE', { dateStyle: 'full', timeStyle: 'short' })
+        }).catch(function(){ /* silencioso a propósito */ });
       } catch (err) { /* nunca debe romper la celebración */ }
     }
 
@@ -2256,7 +2230,7 @@
         botonSi.classList.add('oculto');
         if (celebracion) celebracion.classList.add('activa');
         lanzarConfeti();
-        avisarPorCorreo();
+        avisarPorNotificacion();
       });
     }
   })();
